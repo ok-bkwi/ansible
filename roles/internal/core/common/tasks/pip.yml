@@ -1,0 +1,23 @@
+---
+- name: Pip conf
+  template: 
+    src: pip.conf.j2
+    dest: /etc/pip.conf
+  when: common_pip_repository_url is defined
+
+- name: Pip trust store
+  file: 
+    path: "{{ common_pip_ca_trust_store }}"
+    state: directory
+  when: common_pip_ca_bundle_url is defined
+
+- name: Pip ca bundle
+  get_url: 
+    url: "{{ common_pip_ca_bundle_url }}"
+    dest: "{{ common_pip_ca_trust_store }}/{{ common_pip_ca_bundle_url | basename }}"
+  when: common_pip_ca_bundle_url is defined
+
+- name: Pip packages
+  pip:
+    name: '{{ common_pip_packages }}'
+    state: present

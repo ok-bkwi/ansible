@@ -10,7 +10,7 @@
   file:
     path: "{{ common_pip_ca_trust_store }}"
     state: directory
-    mode: 0644
+    mode: 0755
   when: common_pip_ca_bundle_url is defined
 
 - name: Pip ca bundle

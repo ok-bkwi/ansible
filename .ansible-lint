@@ -1,2 +1,6 @@
 exclude_paths:
   - ./roles/external/
+  - ./roles/internal/test/
+skip_list:
+  - '701'
+warn_list: []

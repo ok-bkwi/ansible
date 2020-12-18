@@ -19,10 +19,15 @@
     dest: "{{ common_pip_ca_trust_store }}/{{ common_pip_ca_bundle_url | basename }}"
   when: common_pip_ca_bundle_url is defined
 
+- name: Upgrade pip
+  command:
+    cmd: "pip install --upgrade pip"
+
 - name: Pip packages
   pip:
     name: '{{ common_pip_packages }}'
     state: present
+    extra_args: --upgrade pip
 
 - name: Pip packages extra
   pip:

@@ -12,5 +12,5 @@
   with_items: '{{ cadownload.results }}'
   when: 
     - cadownload.results is defined
-    - item.changed == True
+    - item.changed
     - cacerts_os_ca_pem_urls is defined

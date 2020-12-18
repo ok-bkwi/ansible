@@ -16,4 +16,3 @@ dependencies:
   - {role: monit,                   tags: monitoring }
   - {role: swid,                    tags: swid }
   - {role: cacerts,                 tags: ssl }
- 

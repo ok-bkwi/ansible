@@ -1,8 +1,8 @@
 ---
-c2_alias_prefix: tpelcm
-c2_alias_editor: nano
+alias_prefix: tpelcm
+alias_editor: nano
 
-c2_alias_roles: 
+alias_roles: 
   - myapp
   - proxy
   - opendj
@@ -18,7 +18,7 @@ c2_alias_roles:
   - jenkins
   - bitbucket
 
-c2_alias:
+alias:
   roles:
     myapp:
       logs: ["/var/log/myapp/myapp.log"]

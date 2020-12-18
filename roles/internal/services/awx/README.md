@@ -8,6 +8,8 @@ The local docker option of AWX is not 100% reliable. This is result of a bug in 
 
 To fix this stop **awx_web** and restart **awx_task**. The Docker logs should show **awx_task** migrations running and completing after which logs no longer show error messages. Then start **awx_web**.
 
+Something similar with `create_preload_data`. If you put this on `yes` first provision it will fail because migrations are running. If you want this data, start with `create_preload_data: false`.
+
 ## Requirements
 
 ## Role Variables

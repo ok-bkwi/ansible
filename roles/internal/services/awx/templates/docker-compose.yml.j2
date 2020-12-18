@@ -3,35 +3,46 @@ version: '2'
 services:
 
   web:
-    image: {{ awx_web_docker_actual_image }}
+    image: {{ awx_docker_actual_image }}
     container_name: awx_web
     depends_on:
       - redis
-      - memcached
       {% if pg_hostname is not defined %}
       - postgres
       {% endif %}
+    {% if (host_port is defined) or (host_port_ssl is defined) %}
     ports:
-      {% if ssl_certificate is defined %}
-      - "{{ awx_host_port_ssl }}:8053"
+      {% if (host_port_ssl is defined) and (ssl_certificate is defined) %}
+      - "{{ host_port_ssl }}:8053"
       {% endif %}
-      - "{{ awx_host_port }}:8052"
+      {% if host_port is defined %}
+      - "{{ host_port }}:8052"
+      {% endif %}
+    {% endif %}
     hostname: {{ awx_web_hostname }}
     user: root
     restart: unless-stopped
+    {% if (awx_web_container_labels is defined) and (',' in awx_web_container_labels) %}
+    {% set awx_web_container_labels_list = awx_web_container_labels.split(',') %}
+    labels:
+      {% for awx_web_container_label in awx_web_container_labels_list %}
+      - {{ awx_web_container_label }}
+      {% endfor %}
+    {% elif awx_web_container_labels is defined %}
+    labels:
+      - {{ awx_web_container_labels }}
+    {% endif %}
     volumes:
       - supervisor-socket:/var/run/supervisor
       - rsyslog-socket:/var/run/awx-rsyslog/
       - rsyslog-config:/var/lib/awx/rsyslog/
-      - "{{ awx_docker_compose_dir }}/SECRET_KEY:/etc/tower/SECRET_KEY"
-      - "{{ awx_docker_compose_dir }}/environment.sh:/etc/tower/conf.d/environment.sh"
-      - "{{ awx_docker_compose_dir }}/credentials.py:/etc/tower/conf.d/credentials.py"
-      - "{{ awx_docker_compose_dir }}/nginx.conf:/etc/nginx/nginx.conf:ro"
-      - "{{ awx_docker_compose_dir }}/redis_socket:/var/run/redis/:rw"
-      - "{{ awx_docker_compose_dir }}/memcached_socket:/var/run/memcached/:rw"
-      - "{{ awx_docker_compose_dir }}/vpass:/etc/tower/vpass"      
-    {% if awx_project_data_dir is defined %}
-      - "{{ awx_project_data_dir +':/var/lib/awx/projects:rw' }}"
+      - "{{ docker_compose_dir }}/SECRET_KEY:/etc/tower/SECRET_KEY"
+      - "{{ docker_compose_dir }}/environment.sh:/etc/tower/conf.d/environment.sh"
+      - "{{ docker_compose_dir }}/credentials.py:/etc/tower/conf.d/credentials.py"
+      - "{{ docker_compose_dir }}/nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "{{ docker_compose_dir }}/redis_socket:/var/run/redis/:rw"
+    {% if project_data_dir is defined %}
+      - "{{ project_data_dir +':/var/lib/awx/projects:rw' }}"
     {% endif %}
     {% if custom_venv_dir is defined %}
       - "{{ custom_venv_dir +':'+ custom_venv_dir +':rw' }}"
@@ -63,22 +74,32 @@ services:
     {% elif awx_alternate_dns_servers is defined %}
     dns: "{{ awx_alternate_dns_servers }}"
     {% endif %}
+    {% if (docker_compose_extra_hosts is defined) and (':' in docker_compose_extra_hosts) %}
+    {% set docker_compose_extra_hosts_list = docker_compose_extra_hosts.split(',') %}
+    extra_hosts:
+    {% for docker_compose_extra_host in docker_compose_extra_hosts_list %}
+      - "{{ docker_compose_extra_host }}"
+    {% endfor %}
+    {% endif %}
     environment:
       http_proxy: {{ http_proxy | default('') }}
       https_proxy: {{ https_proxy | default('') }}
       no_proxy: {{ no_proxy | default('') }}
-      ANSIBLE_VAULT_PASSWORD_FILE: /etc/tower/vpass       
+    {% if docker_logger is defined %}
+    logging:
+      driver: {{ docker_logger }}
+    {% endif %}
 
   task:
-    image: {{ awx_task_docker_actual_image }}
+    image: {{ awx_docker_actual_image }}
     container_name: awx_task
     depends_on:
       - redis
-      - memcached
       - web
       {% if pg_hostname is not defined %}
       - postgres
       {% endif %}
+    command: /usr/bin/launch_awx_task.sh
     hostname: {{ awx_task_hostname }}
     user: root
     restart: unless-stopped
@@ -86,14 +107,12 @@ services:
       - supervisor-socket:/var/run/supervisor
       - rsyslog-socket:/var/run/awx-rsyslog/
       - rsyslog-config:/var/lib/awx/rsyslog/
-      - "{{ awx_docker_compose_dir }}/SECRET_KEY:/etc/tower/SECRET_KEY"
-      - "{{ awx_docker_compose_dir }}/environment.sh:/etc/tower/conf.d/environment.sh"
-      - "{{ awx_docker_compose_dir }}/credentials.py:/etc/tower/conf.d/credentials.py"
-      - "{{ awx_docker_compose_dir }}/redis_socket:/var/run/redis/:rw"
-      - "{{ awx_docker_compose_dir }}/memcached_socket:/var/run/memcached/:rw"
-      - "{{ awx_docker_compose_dir }}/vpass:/etc/tower/vpass"      
-    {% if awx_project_data_dir is defined %}
-      - "{{ awx_project_data_dir +':/var/lib/awx/projects:rw' }}"
+      - "{{ docker_compose_dir }}/SECRET_KEY:/etc/tower/SECRET_KEY"
+      - "{{ docker_compose_dir }}/environment.sh:/etc/tower/conf.d/environment.sh"
+      - "{{ docker_compose_dir }}/credentials.py:/etc/tower/conf.d/credentials.py"
+      - "{{ docker_compose_dir }}/redis_socket:/var/run/redis/:rw"
+    {% if project_data_dir is defined %}
+      - "{{ project_data_dir +':/var/lib/awx/projects:rw' }}"
     {% endif %}
     {% if custom_venv_dir is defined %}
       - "{{ custom_venv_dir +':'+ custom_venv_dir +':rw' }}"
@@ -122,15 +141,21 @@ services:
     {% elif awx_alternate_dns_servers is defined %}
     dns: "{{ awx_alternate_dns_servers }}"
     {% endif %}
+    {% if (docker_compose_extra_hosts is defined) and (':' in docker_compose_extra_hosts) %}
+    {% set docker_compose_extra_hosts_list = docker_compose_extra_hosts.split(',') %}
+    extra_hosts:
+    {% for docker_compose_extra_host in docker_compose_extra_hosts_list %}
+      - "{{ docker_compose_extra_host }}"
+    {% endfor %}
+    {% endif %}
     environment:
       http_proxy: {{ http_proxy | default('') }}
       https_proxy: {{ https_proxy | default('') }}
       no_proxy: {{ no_proxy | default('') }}
-      SUPERVISOR_WEB_CONFIG_PATH: '/supervisor.conf'
-      ANSIBLE_VAULT_PASSWORD_FILE: /etc/tower/vpass       
+      SUPERVISOR_WEB_CONFIG_PATH: '/etc/supervisord.conf'
 
   redis:
-    image: {{ awx_redis_image }}
+    image: {{ redis_image }}
     container_name: awx_redis
     restart: unless-stopped
     environment:
@@ -139,38 +164,43 @@ services:
       no_proxy: {{ no_proxy | default('') }}
     command: ["/usr/local/etc/redis/redis.conf"]
     volumes:
-      - "{{ awx_docker_compose_dir }}/redis.conf:/usr/local/etc/redis/redis.conf:ro"
-      - "{{ awx_docker_compose_dir }}/redis_socket:/var/run/redis/:rw"
-      - "{{ awx_docker_compose_dir }}/memcached_socket:/var/run/memcached/:rw"
-
-  memcached:
-    image: "{{ awx_memcached_image }}:{{ awx_memcached_version }}"
-    container_name: awx_memcached
-    command: ["-s", "/var/run/memcached/memcached.sock", "-a", "0666"]
-    restart: unless-stopped
-    environment:
-      http_proxy: {{ http_proxy | default('') }}
-      https_proxy: {{ https_proxy | default('') }}
-      no_proxy: {{ no_proxy | default('') }}
-    volumes:
-      - "{{ awx_docker_compose_dir }}/memcached_socket:/var/run/memcached/:rw"
+      - "{{ docker_compose_dir }}/redis.conf:/usr/local/etc/redis/redis.conf:ro"
+      - "{{ docker_compose_dir }}/redis_socket:/var/run/redis/:rw"
+    {% if docker_logger is defined %}
+    logging:
+      driver: {{ docker_logger }}
+    {% endif %}
 
   {% if pg_hostname is not defined %}
   postgres:
-    image: {{ awx_postgresql_image }}
+    image: {{ postgresql_image }}
     container_name: awx_postgres
     restart: unless-stopped
     volumes:
-      - {{ awx_postgres_data_dir }}/10/data/:/var/lib/postgresql/data/pgdata:Z
+      - "{{ postgres_data_dir }}/10/data/:/var/lib/postgresql/data:Z"
     environment:
-      POSTGRES_USER: {{ awx_pg_username }}
-      POSTGRES_PASSWORD: {{ awx_pg_password }}
-      POSTGRES_DB: {{ awx_pg_database }}
-      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: {{ pg_username }}
+      POSTGRES_PASSWORD: {{ pg_password }}
+      POSTGRES_DB: {{ pg_database }}
       http_proxy: {{ http_proxy | default('') }}
       https_proxy: {{ https_proxy | default('') }}
       no_proxy: {{ no_proxy | default('') }}
+    {% if docker_logger is defined %}
+    logging:
+      driver: {{ docker_logger }}
+    {% endif %}
   {% endif %}
+
+{% if docker_compose_subnet is defined %}
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet:  {{ docker_compose_subnet }}
+{% endif %}
+
 volumes:
   supervisor-socket:
   rsyslog-socket:

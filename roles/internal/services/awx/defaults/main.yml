@@ -1,38 +1,41 @@
 ---
+# from https://github.com/ansible/awx/blob/devel/installer/inventory
+dockerhub_base: ansible
 awx_task_hostname: awx
 awx_web_hostname: awxweb
-awx_host_port: 80
-awx_host_port_ssl: 443
+postgres_data_dir: "~/.awx/pgdocker"
+host_port: 80
+host_port_ssl: 443
+docker_compose_dir: "~/.awx/awxcompose"
 
-awx_admin_user: admin
-awx_admin_password: supersecure
-awx_create_preload_data: True
-awx_secret_key: supersecure
+pg_username: awx
+pg_password: awxpass # secret
+pg_database: awx
+pg_port: 5432
+admin_user: admin
+admin_password: password # secret
+create_preload_data: no
+secret_key: awxsecret # secret
+broadcast_websocket_secret: oh6G4y2XdXhI2MaoQ16A # secret
 
-awx_pg_username: awx
-awx_pg_password: supersecure
-awx_pg_database: awx
-awx_pg_port: 5432
+project_data_dir: /opt/awx
 
-awx_dockerhub_base: ansible
-awx_version: 11.2.0
+#http_proxy=http://proxy:3128
+#https_proxy=http://proxy:3128
+#no_proxy=mycorp.org
 
-awx_home: /opt/awx
-awx_home_version: /opt/awx # for backup
-awx_redis_image: redis
+# from https://github.com/ansible/awx/blob/devel/installer/roles/local_docker/defaults/main.yml
+dockerhub_version: 16.0.0
+awx_image: awx
+redis_image: redis
 
-awx_postgresql_version: 10
-awx_postgresql_image: "postgres:{{awx_postgresql_version}}"
+postgresql_version: 10
+postgresql_image: "postgres:{{postgresql_version}}"
 
-awx_memcached_image: memcached
-awx_memcached_version: alpine
+compose_start_containers: true
 
-awx_compose_start_containers: true
+# for backup role                                                                              only
+awx_home: "{{ project_data_dir }}"
+awx_version: "{{ dockerhub_version }}"
 
-awx_postgres_data_dir: "{{ awx_home }}/pgdocker"
-awx_docker_compose_dir: "{{ awx_home }}/compose"
-awx_project_data_dir: "{{ awx_home }}/compose"
-
-awx_web_image: awx_web
-
-awx_vpass: secret
+awx_versions_sequence: ['16.0.0']

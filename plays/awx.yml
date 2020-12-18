@@ -8,3 +8,6 @@
     - { role: geerlingguy.docker,           tags: ["awx", "docker"] }
     - { role: awx,                          tags: ["awx"] }
     - { role: backup,                       tags: ["backup"] }
+
+  vars:
+    common_pip_packages_extra: ['docker','docker-compose']

@@ -1,6 +1,7 @@
 exclude_paths:
   - ./roles/external/
   - ./roles/internal/test/
+  - ./roles/internal/services/awx/
 skip_list:
   - '701'
 warn_list: []

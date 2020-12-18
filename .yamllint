@@ -14,3 +14,5 @@ rules:
 ignore: |
   .tox/
   ./roles/external/
+  ./roles/internal/services/awx/
+  ./roles/internal/test/

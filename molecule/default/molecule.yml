@@ -6,9 +6,9 @@
 #  name: galaxy
 #  options:
 #    role-file: requirements.yml
+#yamllint .
 lint: |
   set -e
-  yamllint .
   ansible-lint
 driver:
   name: docker

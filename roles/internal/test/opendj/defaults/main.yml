@@ -20,7 +20,7 @@ opendj_password: supersecure
 opendj_ldif_file: /tmp/cicd.ldif
 
 # BaseDN
-opendj_basedn: "dc=cicd,dc=tech"
+opendj_basedn: "dc=seetoo,dc=tech"
 
 opendj_ldap_port: 389
 opendj_ldaps_port: 636

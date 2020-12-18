@@ -1,5 +1,6 @@
 ---
-- set_fact: alias_roles_node="{{ alias_roles | intersect(ansible_role_names_cleaned) }}"
+- name: Set fact node roles
+  set_fact: alias_roles_node="{{ alias_roles | intersect(ansible_role_names_cleaned) }}"
 
 - name: Alias file
   template:

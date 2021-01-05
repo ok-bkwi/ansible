@@ -4,7 +4,7 @@
     daemon_reload: true
   changed_when: false
   ignore_errors: true
-  when: jira_manual_upgrade == False
+  when: not jira_manual_upgrade
 
 - name: jira-systemctl-restart
   service:
@@ -16,4 +16,4 @@
   run_once: true
   changed_when: false
   ignore_errors: true
-  when: jira_manual_upgrade == False
+  when: not jira_manual_upgrade

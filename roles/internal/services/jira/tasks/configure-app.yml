@@ -5,6 +5,7 @@
     owner: "{{ jira_owner }}"
     group: "{{ jira_group }}"
     src: jira-application.properties.j2
+    mode: 0644
   notify: jira-systemctl-restart
 
 - name: setenv.sh
@@ -13,13 +14,13 @@
     regexp: "{{ item.regexp }}"
     replace: "{{ item.replace }}"
   with_items:
-    - regexp: "JVM_MINIMUM_MEMORY=\".*?\"" 
+    - regexp: "JVM_MINIMUM_MEMORY=\".*?\""
       replace: "JVM_MINIMUM_MEMORY=\"{{ jira_jvm_minimum_memory }}\""
-    - regexp: "JVM_MAXIMUM_MEMORY=\".*?\"" 
+    - regexp: "JVM_MAXIMUM_MEMORY=\".*?\""
       replace: "JVM_MAXIMUM_MEMORY=\"{{ jira_jvm_maximum_memory }}\""
-    - regexp: "JVM_SUPPORT_RECOMMENDED_ARGS=\".*?\"" 
+    - regexp: "JVM_SUPPORT_RECOMMENDED_ARGS=\".*?\""
       replace: "JVM_SUPPORT_RECOMMENDED_ARGS=\"{{ jira_jvm_support_recommended_args }}\""
-    - regexp: ".?JIRA_HOME=\".*?\"" 
+    - regexp: ".?JIRA_HOME=\".*?\""
       replace: "JIRA_HOME=\"{{ jira_home_version_home }}\""
   notify: jira-systemctl-restart
 
@@ -29,6 +30,7 @@
     owner: "{{ jira_owner }}"
     group: "{{ jira_group }}"
     src: server.xml.j2
+    mode: 0644
   notify: jira-systemctl-restart
 
 - name: Extra libaries
@@ -38,7 +40,7 @@
     owner: "{{ jira_owner }}"
     group: "{{ jira_group }}"
     url: "{{ item.url }}"
-  with_items: "{{ jira_libraries }}" 
+  with_items: "{{ jira_libraries }}"
   notify: jira-systemctl-restart
 
 - name: Oracle JDBC driver

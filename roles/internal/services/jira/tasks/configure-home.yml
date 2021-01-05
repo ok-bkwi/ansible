@@ -6,7 +6,11 @@
 
 - name: Jira setup check
   debug:
-    msg: "Jira has not been setup yet. Use a browser to navigate to http://{{ jira_proxy_name }}:{{ jira_proxy_port }}{{ jira_web_context }}  and complete setup"
+    msg: >
+      Jira has not been setup yet.
+      Use a browser to navigate to
+      http://{{ jira_proxy_name }}:{{ jira_proxy_port }}{{ jira_web_context }}
+      and complete setup"
   changed_when: true
   when: not dbconfig_xml.stat.exists
 
@@ -16,8 +20,9 @@
     owner: "{{ jira_owner }}"
     group: "{{ jira_group }}"
     src: dbconfig.xml.j2
+    mode: 0644
   notify: jira-systemctl-restart
-  when: dbconfig_xml.stat.exists 
+  when: dbconfig_xml.stat.exists
 
 - name: Enable MS Excel export
   template:
@@ -25,4 +30,5 @@
     owner: "{{ jira_owner }}"
     group: "{{ jira_group }}"
     src: jira-config.properties.j2
+    mode: 0644
   notify: jira-systemctl-restart

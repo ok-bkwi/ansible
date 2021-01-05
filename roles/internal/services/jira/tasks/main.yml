@@ -16,7 +16,7 @@
     - jira-systemctl-daemon-reload
     - jira-systemctl-restart
 
-- include: ../../postgresql/tasks/database.yml 
+- include: ../../mw/postgresql/tasks/database.yml 
   when: jira_database_type == 'postgresql'
 
 - include: install.yml

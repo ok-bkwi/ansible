@@ -10,7 +10,7 @@
     state: directory
     group: "{{ bitbucket_owner }}"
     owner: "{{ bitbucket_group }}"
-    mode: 0644
+    mode: 0755
   #register: install_symlink
 
 - name: response file

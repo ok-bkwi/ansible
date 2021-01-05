@@ -51,9 +51,7 @@ reverse_proxy_vhosts:
 
 #reverse_proxy_global_favicon: favicon-blue.ico
 
-common_packages: 
-  Debian: ['nfs-utils', 'nano', 'python-ldap']
-  RedHat: ['nfs-utils', 'nano', 'python-ldap']
+common_pip_packages_extra: ['python-ldap']
 
 proxy_skip: true
 

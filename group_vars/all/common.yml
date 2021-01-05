@@ -1,7 +1,6 @@
 ---
-common_packages: 
-  Debian: ['nfs-common', 'nano' ] 
-  RedHat: ['nfs-utils', 'nano', 'tree' ]
+common_packages_extra: 
+  RedHat 7: ['nfs-utils', 'nano', 'tree', 'python-devel','openldap-devel']
 
 #'libffi-dev','libpq-dev'
 #'libffi-devel'

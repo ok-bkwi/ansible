@@ -1,7 +1,7 @@
 ---
 - name: Stop SonarQube for LCM
   service: name=sonarqube state=stopped
-  when: sonarqube_lcm['operation'] in ['upgrade','rollback','rollforward'] 
+  when: sonarqube_lcm['operation'] in ['upgrade','rollback','rollforward']
 
 - include: database.yml
 - include: install.yml
@@ -9,11 +9,11 @@
 
 - include: plugins.yml
   vars:
-    sonarqube_plugins_jar_location: "{{sonarqube_home_version }}/extensions/plugins"
+    sonarqube_plugins_jar_location: "{{ sonarqube_home_version }}/extensions/plugins"
 # Community branch plugin installs also in lib common    
 - include: plugins.yml
   vars:
-    sonarqube_plugins_jar_location: "{{sonarqube_home_version }}/lib/common"
+    sonarqube_plugins_jar_location: "{{ sonarqube_home_version }}/lib/common"
 
 - include: service.yml
 - include: jmx.yml

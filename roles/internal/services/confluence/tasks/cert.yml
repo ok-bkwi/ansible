@@ -3,12 +3,13 @@
   file:
     path: "{{ confluence_keystore }}"
     state: directory
+    mode: 0755
 
 - name: Generate server private key
   openssl_privatekey:
     path: "{{ confluence_keystore }}/https.key"
 
-- name: Create certificate signing request 
+- name: Create certificate signing request
   openssl_csr:
     path: "{{ confluence_keystore }}/https.csr"
     privatekey_path: "{{ confluence_keystore }}/https.key"

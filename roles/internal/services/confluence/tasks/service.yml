@@ -6,11 +6,11 @@
     owner: root
     group: root
     mode: 0755
-  when: "ansible_service_mgr == 'systemd'" 
-  notify: 
+  when: "ansible_service_mgr == 'systemd'"
+  notify:
     - confluence-systemctl-daemon-reload
     - confluence-systemctl-restart
 
 - name: ensure service running and set to start on boot
   service: name=confluence state=started enabled=yes
-  when: confluence_manual_upgrade == False
+  when: not confluence_manual_upgrade

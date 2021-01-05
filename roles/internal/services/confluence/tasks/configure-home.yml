@@ -5,7 +5,7 @@
 # check ( check_mode: yes ) if file would change if we put this
 # text in ourselves. 
 
-- name: "Check setup status"
+- name: "Check setup status" # noqa 208
   lineinfile:
     path: "{{ confluence_home_version_home }}/confluence.cfg.xml"
     regexp: "^.*?<setupStep>.*?</setupStep>$"

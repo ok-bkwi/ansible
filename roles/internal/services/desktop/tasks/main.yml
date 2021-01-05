@@ -3,28 +3,33 @@
   file:
     path: "{{ desktop_home }}"
     state: directory
-    mode: 400
+    mode: 0400
 
-- template:
+- name: VNC password
+  template:
     dest: "{{ desktop_home }}/set-vnc-password.sh"
     src: set-vnc-password.sh.j2
-    mode: 755
+    mode: 0755
 
-- pip:
+- name: Pip docker-compose
+  pip:
     name: docker-compose
     version: 1.9.0
     state: present
     extra_args: --upgrade pip
 
-- docker_image:
+- name: Pull image
+  docker_image:
     name: "{{ desktop_image }}:{{ desktop_version }}"
     source: pull
 
-- docker_volume:
+- name: Create volume
+  docker_volume:
     name: "{{ item }}"
   with_items: "{{ desktop_volumes }}"
 
-- docker_container:
+- name: Start desktop
+  docker_container:
     name: "{{ item }}"
     image: "{{ desktop_containers[item]['desktop_image']|default(desktop_image) }}:{{ desktop_containers[item]['desktop_version']|default(desktop_version) }}"
     networks:
@@ -39,7 +44,7 @@
     restart_policy: unless-stopped
   with_items: "{{ desktop_containers }}"
 
-- name: Set passwords
+- name: Set passwords # noqa 305
   shell: "{{ desktop_home }}/set-vnc-password.sh {{ item }}"
   with_items: "{{ desktop_containers }}"
   changed_when: false

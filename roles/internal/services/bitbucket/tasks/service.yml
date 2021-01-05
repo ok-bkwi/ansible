@@ -6,9 +6,9 @@
     owner: root
     group: root
     mode: 0755
-  notify: 
+  notify:
     - bitbucket-systemctl-daemon-reload
-    - bitbucket-systemctl-restart  
+    - bitbucket-systemctl-restart
 
 - name: ensure service running and set to start on boot
   service: name=bitbucket state=started enabled=yes

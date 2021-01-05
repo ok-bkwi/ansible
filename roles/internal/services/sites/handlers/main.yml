@@ -1,10 +1,11 @@
 ---
 - name: chown-site-owner
-  file: 
+  file:
     path: "/var/www/html/{{ sites[item]['context'] }}"
     owner: "{{ sites[item]['owner'] }}"
-    group: "{{ sites[item]['owner'] }}"    
+    group: "{{ sites[item]['owner'] }}"
     state: directory
-    recurse: yes 
+    recurse: yes
+    mode: 0755
   with_items: "{{ sites }}"
-  when: sites[item]['owner'] is defined    
+  when: sites[item]['owner'] is defined

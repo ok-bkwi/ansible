@@ -10,18 +10,20 @@
     path: "{{ sonarqube_home }}"
     state: directory
     group: sonarqube
-    owner: sonarqube 
+    owner: sonarqube
+    mode: 0755
 
 - name: Create install folder
   file:
-    path: "{{sonarqube_home_version }}"
+    path: "{{ sonarqube_home_version }}"
     state: directory
     group: sonarqube
-    owner: sonarqube    
+    owner: sonarqube
+    mode: 0644
   register: install_symlink
 
 - name: Check installed
-  stat: 
+  stat:
     path: "{{ sonarqube_home_version }}/conf"
   register: sonarqube_installed
 
@@ -32,7 +34,7 @@
     validate_certs: "{{ sonarqube_download_validate_certs }}"
     checksum: "{{ sonarqube_versions[sonarqube_version]['checksum'] }}"
   notify: restart sonarqube
-  when: sonarqube_installed.stat.exists == false
+  when: not sonarqube_installed.stat.exists
 
 - name: Unzip package
   package:
@@ -45,8 +47,8 @@
     dest: "{{ sonarqube_home }}"
     copy: false
     group: sonarqube
-    owner: sonarqube    
-  when: sonarqube_installed.stat.exists == false
+    owner: sonarqube
+  when: not sonarqube_installed.stat.exists
   notify:
     - lcm-version-file
 
@@ -56,7 +58,7 @@
    dest: "{{ sonarqube_home }}/sonarqube"
    state: link
 
-- name: Create symbolic link jar 
+- name: Create symbolic link jar
   file:
    src: "{{ sonarqube_home_version }}/lib/sonar-application-{{ sonarqube_version }}.jar"
    dest: "{{ sonarqube_home_version }}/lib/sonar-application.jar"
@@ -64,4 +66,4 @@
 
 - name: Copy data dir ( part of upgrade )
   command: "rsync -az --delete --recursive {{ sonarqube_home_version_current }}/extensions/plugins/ {{ sonarqube_home_version }}/extensions/plugins/"
-  when: sonarqube_lcm['operation'] == 'upgrade' 
+  when: sonarqube_lcm['operation'] == 'upgrade'

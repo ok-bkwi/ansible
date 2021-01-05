@@ -6,7 +6,7 @@
 
 # OpenAM won't start without home directory
 # and robertdebock.tomcat does not create tomcat home directory
-- name: Create home directory for tomcat 
+- name: Create home directory for tomcat
   file:
     path: /home/tomcat
     state: directory

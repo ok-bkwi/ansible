@@ -18,4 +18,4 @@
     limit_type: hard
     limit_item: nofile
     value: "{{ sonarqube_pam_limits_hard_nofile }}"
-  notify: restart sonarqube 
+  notify: restart sonarqube

@@ -29,23 +29,25 @@
   vars:
     ansible_ssh_pipelining: true
 
-- stat:
+- name: Check initdb.sql
+  stat:
     path: "{{ guacamole_home_version }}/initdb.sql"
   register: initdb_script_path
 
-- name: initdb script
+- name: Create initdb.sql
   command:
     cmd: "docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres"
-  when: not initdb_script_path.stat.exists 
+  when: not initdb_script_path.stat.exists
   register: initdb_script
 
-- name: initdb script to file
+- name: Local copy initdb.sql
   copy:
     content: "{{ initdb_script.stdout }}"
     dest: "{{ guacamole_home_version }}/initdb.sql"
-  when: not initdb_script_path.stat.exists 
+    mode: 0644
+  when: not initdb_script_path.stat.exists
 
-- name: Run initdb script
+- name: Run initdb.sql
   postgresql_query:
     db: "{{ guacamole_database_name_version }}"
     login_host: "{{ guacamole_database_host }}"
@@ -53,7 +55,7 @@
     login_password: "{{ guacamole_database_password }}"
     port: "{{ guacamole_database_port }}"
     path_to_script: "{{ guacamole_home_version }}/initdb.sql"
-  when: not initdb_script_path.stat.exists 
+  when: not initdb_script_path.stat.exists
 
 #- debug:
 #    var: initdb_script.stdout

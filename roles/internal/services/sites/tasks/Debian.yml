@@ -3,12 +3,14 @@
   template:
     src: ports.conf.j2
     dest: /etc/apache2/ports.conf
+    mode: 0644
   notify: restart apache
 
 - name: Configure Apache
   template:
     src: sites.conf.j2
     dest: "/etc/apache2/sites-enabled/sites.conf"
+    mode: 0644
   notify: restart apache
 
 - name: Delete obsolete Debian config
@@ -19,7 +21,7 @@
   with_items:
      - 000-default.conf
      - vhosts.conf
- 
+
 - name: Enable mods
   command: "a2enmod {{ item }}"
   args:
@@ -27,4 +29,4 @@
   with_items:
      - socache_shmcb
      - proxy
-     - proxy_http 
+     - proxy_http

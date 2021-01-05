@@ -10,10 +10,10 @@
     group: "{{ bitbucket_group }}"
   register: get_url_result
   until: get_url_result is succeeded
-  when: bitbucket_lcm['operation'] in ['upgrade','install','prepare-upgrade'] 
+  when: bitbucket_lcm['operation'] in ['upgrade','install','prepare-upgrade']
 
 - name: remove installer
   file:
     path: "{{ bitbucket_home }}/{{ bitbucket_versions[bitbucket_version]['url']|basename }}"
     state: absent
-  when: bitbucket_lcm['operation'] not in ['upgrade','install','prepare-upgrade'] 
+  when: bitbucket_lcm['operation'] not in ['upgrade','install','prepare-upgrade']

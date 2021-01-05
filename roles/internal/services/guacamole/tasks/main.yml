@@ -15,13 +15,15 @@
     state: directory
     group: "{{ guacamole_owner }}"
     owner: "{{ guacamole_owner }}"
+    mode: 0644
 
 - name: Create install folder
   file:
     path: "{{ guacamole_home_version }}"
     state: directory
     group: "{{ guacamole_owner }}"
-    owner: "{{ guacamole_owner }}" 
+    owner: "{{ guacamole_owner }}"
+    mode: 0644
   register: install_symlink
 
 - include: database.yml

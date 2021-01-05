@@ -5,12 +5,14 @@
     owner: "{{ bitbucket_owner }}"
     group: "{{ bitbucket_group }}"
     src: bitbucket.properties.j2
+    mode: 0644
   notify: bitbucket-systemctl-restart
 
 - name: env file BITBUCKET_HOME etc
   template:
-   dest: /etc/profile.d/bitbucket.sh
-   src: bitbucket.sh.j2
+    dest: /etc/profile.d/bitbucket.sh
+    src: bitbucket.sh.j2
+    mode: 0644
 
 - name: Extra libraries
   get_url:
@@ -19,6 +21,6 @@
     owner: "{{ bitbucket_owner }}"
     group: "{{ bitbucket_group }}"
     url: "{{ item.url }}"
-  with_items: "{{ bitbucket_libraries }}" 
+  with_items: "{{ bitbucket_libraries }}"
   notify: bitbucket-systemctl-restart
   ignore_errors: yes

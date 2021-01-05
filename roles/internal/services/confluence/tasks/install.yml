@@ -3,7 +3,8 @@
   file:
     path: "{{ item }}"
     state: directory
-  with_items: 
+    mode: 0755
+  with_items:
     - "{{ confluence_home_version }}"
     - "{{ confluence_home_version_home }}"
 
@@ -17,26 +18,27 @@
   template:
     dest: "{{ confluence_home }}/reponse.varfile"
     src: response.varfile.j2
+    mode: 0644
 
 - name: Copy home dir
   command: "rsync -az --delete --recursive --exclude='VERSION' {{ confluence_home_version_current }}/ {{ confluence_home_version }}/"
-  when: confluence_lcm['operation'] == 'upgrade' 
+  when: confluence_lcm['operation'] == 'upgrade'
   notify:
     - lcm-version-file
 
-- include: installer.yml 
+- include: installer.yml
   when: confluence_lcm['operation'] == 'install'
 
 - include: configure-home.yml
 
-- include: installer.yml 
+- include: installer.yml
   when: confluence_lcm['operation'] == 'upgrade'
 
 - include: configure-app.yml
 
-- name: chown confluence home version 
-  file: 
-    dest: "{{ confluence_home }}" 
+- name: chown confluence home version
+  file:
+    dest: "{{ confluence_home }}"
     owner: "{{ confluence_owner }}"
     group: "{{ confluence_group }}"
     recurse: yes
@@ -46,4 +48,4 @@
   file:
     path: "{{ confluence_home }}/{{ confluence_versions[confluence_version]['url']|basename }}"
     state: absent
-  when: confluence_lcm['operation'] not in ['upgrade','install'] 
+  when: confluence_lcm['operation'] not in ['upgrade','install']

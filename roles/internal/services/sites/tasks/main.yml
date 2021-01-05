@@ -20,14 +20,17 @@
 - name: Sites private key
   copy:
     content: "{{ sites_ssh['key'] }}"
-    dest: /var/www/key 
+    dest: /var/www/key
+    mode: 0644
 
 - name: Sites pub key
   copy:
     content: "{{ sites_ssh['pub_key'] }}"
-    dest: /var/www/html/pub_key 
+    dest: /var/www/html/pub_key
+    mode: 0644
 
-- git:
+- name: Checkout site # noqa 401
+  git:
     repo: "{{ sites[item]['url'] }}"
     dest: "/var/www/html/{{ sites[item]['context'] }}"
     key_file: /var/www/key
@@ -35,15 +38,12 @@
   when: sites[item]['url'] is defined
   notify: chown-site-owner
 
-- file:
+- name: Site directory
+  file:
     path: "/var/www/html/{{ sites[item]['context'] }}"
     owner: "{{ sites[item]['owner'] | default(omit) }}"
-    group: "{{ sites[item]['owner'] | default(omit) }}"    
+    group: "{{ sites[item]['owner'] | default(omit) }}"
     state: directory
+    mode: 0644
   with_items: "{{ sites }}"
   when: sites[item]['url'] is not defined
-
-#- debug: 
-#   var: item
-# with_items: "{{ sites }}"
-  

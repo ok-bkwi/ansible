@@ -10,13 +10,14 @@
     path: "{{ bitbucket_home }}"
     state: directory
     group: "{{ bitbucket_owner }}"
-    owner: "{{ bitbucket_group }}" 
+    owner: "{{ bitbucket_group }}"
+    mode: 0755
 
 - include: download.yml
 
 - name: stop for upgrade, rollback or rollfoward
   service: name=bitbucket state=stopped
-  when: bitbucket_lcm['operation'] in ['upgrade','rollback','rollforward'] 
+  when: bitbucket_lcm['operation'] in ['upgrade','rollback','rollforward']
   notify:
     - bitbucket-systemctl-daemon-reload
     - bitbucket-systemctl-restart
@@ -29,12 +30,12 @@
 - include: configuration.yml
 
 - include: jmx.yml
-  when: bitbucket_jmx.enable == True
+  when: bitbucket_jmx.enable
 
 - include: service.yml
 
 - include: prepare.yml
-  when: bitbucket_lcm['operation'] == 'prepare-upgrade'  
+  when: bitbucket_lcm['operation'] == 'prepare-upgrade'
 
 - name: scripts directory
   file:
@@ -42,5 +43,6 @@
     state: directory
     group: "{{ bitbucket_owner }}"
     owner: "{{ bitbucket_group }}"
-    
+    mode: 0755
+
 - include: jobs.yml

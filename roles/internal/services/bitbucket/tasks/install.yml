@@ -3,26 +3,28 @@
   package:
     name: "{{ item }}"
   with_items: "{{ bitbucket_packages[ansible_distribution] }}"
-  
+
 - name: install folder
   file:
     path: "{{ bitbucket_home_version }}"
     state: directory
     group: "{{ bitbucket_owner }}"
-    owner: "{{ bitbucket_group }}"    
+    owner: "{{ bitbucket_group }}"
+    mode: 0644
   #register: install_symlink
 
 - name: response file
   template:
-   dest: "{{ bitbucket_home }}/reponse.varfile"
-   owner: "{{ bitbucket_owner }}"
-   src: response.varfile.j2
+    dest: "{{ bitbucket_home }}/reponse.varfile"
+    owner: "{{ bitbucket_owner }}"
+    src: response.varfile.j2
+    mode: 0644
 
 - name: Copy home dir
   command: "rsync -az --delete --recursive {{ bitbucket_home_version_home_current }}/ {{ bitbucket_home_version_home }}/"
-  when: bitbucket_lcm['operation'] == 'upgrade' 
+  when: bitbucket_lcm['operation'] == 'upgrade'
 
-- name: run installer 
+- name: run installer
   command: "{{ bitbucket_home }}/{{ bitbucket_versions[bitbucket_version]['url']|basename }} -q -varfile {{ bitbucket_home }}/reponse.varfile"
   become: yes
   become_method: sudo
@@ -35,9 +37,9 @@
   when: bitbucket_lcm['operation'] in ['upgrade','install']
 
 # 7.0.1 installer runs as root, fix this  
-- name: chown bitbucket home version 
-  file: 
-    dest: "{{ bitbucket_home_version }}" 
+- name: chown bitbucket home version
+  file:
+    dest: "{{ bitbucket_home_version }}"
     owner: "{{ bitbucket_owner }}"
     group: "{{ bitbucket_group }}"
     recurse: yes

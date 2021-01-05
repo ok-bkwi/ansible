@@ -17,8 +17,9 @@
     owner: "jenkins"
     group: "jenkins"
     src: "{{ item }}.j2"
+    mode: 0644
   notify: restart jenkins
-  with_items: 
+  with_items:
     - configuration.groovy
     - auto_installer_jdk.groovy
     - auto_installer_mvn.groovy

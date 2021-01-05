@@ -21,7 +21,7 @@
     dest: "{{ sonarqube_plugins_jar_location }}"
     group: sonarqube
     owner: sonarqube
-    timeout: "{{ sonarqube_plugin_download_timeout|default(omit)}}"
+    timeout: "{{ sonarqube_plugin_download_timeout|default(omit) }}"
   with_items: "{{ sonarqube_plugins }}"
   when: sonarqube_plugins is defined and (not lib_common or sonarqube_plugins[item]['lib_common'] is defined)
   notify: restart sonarqube
@@ -33,7 +33,9 @@
     pattern: "{{ sonarqube_versions[sonarqube_version]['plugins'][item]['pattern'] }}"
     url: "{{ sonarqube_versions[sonarqube_version]['plugins'][item]['url'] }}"
   with_items: "{{ sonarqube_versions[sonarqube_version]['plugins'] }}"
-  when: sonarqube_versions[sonarqube_version]['plugins'] is defined and (not lib_common or sonarqube_versions[sonarqube_version]['plugins'][item]['lib_common'] is defined)
+  when:
+    - sonarqube_versions[sonarqube_version]['plugins'] is defined
+    - (not lib_common or sonarqube_versions[sonarqube_version]['plugins'][item]['lib_common'] is defined)
   notify: restart sonarqube
 
 - name: Version community plugins
@@ -44,7 +46,9 @@
     dest: "{{ sonarqube_plugins_jar_location }}"
     group: sonarqube
     owner: sonarqube
-    timeout: "{{ sonarqube_plugin_download_timeout|default(omit)}}"
+    timeout: "{{ sonarqube_plugin_download_timeout|default(omit) }}"
   with_items: "{{ sonarqube_versions[sonarqube_version]['plugins'] }}"
-  when: sonarqube_versions[sonarqube_version]['plugins'] is defined and (not lib_common or sonarqube_versions[sonarqube_version]['plugins'][item]['lib_common'] is defined)
+  when:
+    - sonarqube_versions[sonarqube_version]['plugins'] is defined
+    - (not lib_common or sonarqube_versions[sonarqube_version]['plugins'][item]['lib_common'] is defined)
   notify: restart sonarqube

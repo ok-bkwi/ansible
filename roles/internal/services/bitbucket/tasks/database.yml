@@ -13,7 +13,7 @@
   vars:
     ansible_ssh_pipelining: true
 
-- name: create database schema 
+- name: create database schema
   postgresql_db:
     name: "{{ bitbucket_database_name_version }}"
     lc_collate: 'en_US.UTF-8'

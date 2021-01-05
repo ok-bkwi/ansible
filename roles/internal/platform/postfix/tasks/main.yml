@@ -7,9 +7,9 @@
 - name: Postfix configuration
   template:
     dest: /etc/postfix/main.cf
-    mode: 644
+    mode: 0644
     src: main.cf.j2
-  notify: restart postfix   
+  notify: restart postfix
 
 - name: Ensure postfix is started and enabled at boot.
   service:

@@ -9,7 +9,7 @@ alias_roles:
   - nexus
   - postfix
   - nfs
-  - reverse-proxy
+  - reverse_proxy
   - postgresql
   - monit
   - sonarqube
@@ -63,7 +63,7 @@ alias:
       logs: []
       configs:
         - /etc/exports
-    reverse-proxy:
+    reverse_proxy:
       logs: []
       configs:
         - /etc/httpd/conf.d/reverse_proxy.conf

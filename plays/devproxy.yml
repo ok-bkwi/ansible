@@ -12,7 +12,7 @@
     - { role: squid }
     - { role: proxy }
     - { role: env }
-    - { role: reverse-proxy }
+    - { role: reverse_proxy }
 
   vars:
     opendj_url: https://github.com/OpenIdentityPlatform/OpenDJ/releases/download/4.4.3/opendj-4.4.3.zip

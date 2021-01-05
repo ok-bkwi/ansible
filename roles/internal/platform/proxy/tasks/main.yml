@@ -3,11 +3,13 @@
   copy:
     content: "{{ proxy_allowed_ips | join('\n') }}"
     dest: "{{ proxy_allowd_ips_file }}"
+    mode: 0644
 
 - name: direct IPs
   copy:
     content: "{{ proxy_upstream_always_direct | join('\n') }}"
     dest: "{{ proxy_upstream_always_direct_file }}"
+    mode: 0644
 
 - name: upstream proxy server
   template:
@@ -15,6 +17,7 @@
     owner: "{{ squid_user }}"
     group: "{{ squid_group }}"
     src: upstream.conf.j2
+    mode: 0644
   when: proxy_upstream_server is defined
 
 - name: disable upstream proxy server

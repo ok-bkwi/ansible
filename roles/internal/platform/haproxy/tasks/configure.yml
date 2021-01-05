@@ -10,7 +10,7 @@
   notify: restart haproxy
 
 - name: Ensure HAProxy is started and enabled n boot.
-  service: 
-    name: haproxy 
+  service:
+    name: haproxy
     state: started
     enabled: yes

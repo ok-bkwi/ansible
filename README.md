@@ -47,7 +47,7 @@ This repository includes a number of supporting products / components that are t
 
 | Component   |  Purpose | 
 |----------|---|
-| [reverse-proxy](roles/internal/reverse-proxy)| Reverse proxy server |
+| [reverse_proxy](roles/internal/reverse_proxy)| Reverse proxy server |
 | [postgresql](roles/external/geerlingguy.postgresql)| Database for SonarQube, Jira, Bitbucket, Confluence |
 | [cacerts](roles/internal/cacerts)| Import certificates, CA bundles in keystores |
 | [lcm](roles/internal/lcm)| Support LCM operations install, upgrade, rollback, rollforward|

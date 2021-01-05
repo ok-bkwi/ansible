@@ -3,19 +3,21 @@
   template:
     src: ports.conf.j2
     dest: /etc/httpd/conf.d/ports.conf
+    mode: 0644
   notify: restart apache
 
 - name: Configure Httpd
   template:
     src: https_proxy.conf.j2
     dest: "/etc/httpd/conf.d/{{ item }}.conf"
+    mode: 0644
   notify: restart apache
   with_items: "{{ https_proxy_roles }}"
 
 - name: Delete obsolete config
   file:
-   path: "/etc/httpd/conf.d/{{ item }}"
-   state: absent
+    path: "/etc/httpd/conf.d/{{ item }}"
+    state: absent
   notify: restart apache
   with_items:
      - autoindex.conf

@@ -10,7 +10,7 @@
 - name: Drop database
   postgresql_db:
     name: "{{ vars[item + '_database_name_version']  }}"
-    maintenance_db: postgres 
+    maintenance_db: postgres
     login_host: "{{ vars[item + '_database_host'] }}"
     login_password: "{{ vars[item + '_database_admin_password'] }}"
     login_user: "{{ vars[item + '_database_admin_username'] }}"
@@ -33,10 +33,10 @@
     state: present
   when: backup_restore[item]['db_tar'] is defined
 
-- include: ../../mw/postgresql/tasks/allow-sessions.yml 
+- include: ../../mw/postgresql/tasks/allow-sessions.yml
   vars:
     allow_database: "{{ vars[item + '_database_name_version']  }}"
-    lcm_role_upgrade: "{{ item }}"    
+    lcm_role_upgrade: "{{ item }}"
   when: backup_restore[item]['db_tar'] is defined
 
 - name: Restore database
@@ -50,7 +50,7 @@
     target: "{{ backup_restore[item]['db_tar'] }}"
   when: backup_restore[item]['db_tar'] is defined
   register: db_restore
-  failed_when: "'ERROR' in db_restore.stderr"  
+  failed_when: "'ERROR' in db_restore.stderr"
 
 #- name: db_restore
 #  debug:

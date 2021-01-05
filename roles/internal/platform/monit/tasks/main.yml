@@ -1,7 +1,7 @@
 ---
 - name: Monit install and configure fact
   set_fact:
-   monit_install: "{{ (lvm_roles_node is defined and lvm_roles_node|length>0) or (monit_mounts and monit_mounts|length>0) or monit_smtp is defined or monit_system_monitoring is defined }}" 
+   monit_install: "{{ (lvm_roles_node is defined and lvm_roles_node|length>0) or (monit_mounts and monit_mounts|length>0) or monit_smtp is defined or monit_system_monitoring is defined }}" # noqa 204
 
 - name: Monit
   package:
@@ -22,9 +22,10 @@
   notify: reload monit
 
 - name: Disk space
-  template: 
+  template:
     dest: /etc/monit.d/diskspace
     src: diskspace.j2
+    mode: 0644
   when: monit_install
   notify: reload monit
 
@@ -32,6 +33,7 @@
   template:
     dest: /etc/monit.d/smtp
     src: smtp.j2
+    mode: 0644
   when: monit_smtp is defined
   notify: reload monit
 
@@ -39,6 +41,7 @@
   template:
     dest: /etc/monit.d/system
     src: system.j2
+    mode: 0644
   when: monit_system_monitoring is defined
   notify: reload monit
 
@@ -49,4 +52,5 @@
   template:
     dest: /etc/monit.d/log
     src: log.j2
+    mode: 0644
   notify: reload monit

@@ -3,12 +3,14 @@
   template:
     src: ports.conf.j2
     dest: /etc/apache2/ports.conf
+    mode: 0644
   notify: restart apache
 
 - name: Configure Apache
   template:
     src: https_proxy.conf.j2
     dest: "/etc/apache2/sites-enabled/{{ item }}.conf"
+    mode: 0644
   notify: restart apache
   with_items: "{{ https_proxy_roles }}"
 
@@ -19,7 +21,7 @@
   notify: restart apache
   with_items:
      - 000-default.conf
- 
+
 - name: Enable mods
   command: "a2enmod {{ item }}"
   args:
@@ -27,4 +29,4 @@
   with_items:
      - socache_shmcb
      - proxy
-     - proxy_http 
+     - proxy_http

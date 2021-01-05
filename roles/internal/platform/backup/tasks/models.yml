@@ -1,18 +1,19 @@
 ---
-- name: Backup model  
+- name: Backup model
   template:
     dest: '/etc/backup/models/{{ item }}.rb'
     src: model.rb.j2
+    mode: 0644
   with_items: '{{ backup_roles_node }}'
 
 - name: Before and after hook
   template:
     dest: '/etc/backup/hooks/{{ item }}.sh'
     src: model.sh.j2
-    mode: 755
+    mode: 0755
   with_items: '{{ backup_roles_node }}'
 
-- name: Config folder 
+- name: Config folder
   file:
     path: "{{ item|role_script_path }}"
     state: directory
@@ -20,7 +21,7 @@
     recurse: yes
   with_items: '{{ backup_roles_node }}'
 
-- name: Scripts folder 
+- name: Scripts folder
   file:
     path: "{{ item|role_script_path }}"
     state: directory
@@ -32,4 +33,3 @@
     role: "{{ item }}"
   when: vars[item + '_database_type']|default('postgresql') == 'oracle'
   with_items: '{{ backup_roles_node }}'
-  

@@ -11,6 +11,7 @@
     owner: "{{ haproxy_user }}"
     group: "{{ haproxy_group }}"
     state: directory
+    mode: 0755
 
 - name: Check sbin
   stat:
@@ -18,7 +19,7 @@
   register: haproxy
 
 - include: install.yml
-  when: haproxy.stat.exists == False
+  when: not haproxy.stat.exists
 
 - include: service.yml
 - include: configure.yml

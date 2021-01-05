@@ -7,7 +7,7 @@
 - name: Fail restore without confirmation
   fail:
     msg: To perform the restore confirm it with touch /tmp/RESTORE
-  when: backup_restore_confirm == True and not restore_file.stat.exists
+  when: backup_restore_confirm and not restore_file.stat.exists
 
 - name: Tmp restore folders
   file:
@@ -21,7 +21,7 @@
     path: "{{  backup_restore[item]['tmp'] }}/home"
     state: directory
     mode: 0700
-  when: backup_restore[item]['home_tar'] is defined    
+  when: backup_restore[item]['home_tar'] is defined
   with_items: '{{ backup_restore }}'
 
 - name: Extract tar
@@ -36,18 +36,18 @@
   service:
     name: "{{ backup_restore[item]['stop_start_service'] }}"
     state: stopped
-  when: 
+  when:
     backup_restore[item]['stop_start_service'] is defined
   with_items: '{{ backup_restore }}'
 
-- include_tasks: "restore_db_{{vars[item + '_database_type']|default('postgresql')}}.yml"
-  when: 
-    backup_restore_db == True
+- include_tasks: "restore_db_{{ vars[item + '_database_type']|default('postgresql') }}.yml"
+  when:
+    backup_restore_db
   with_items: '{{ backup_restore }}'
 
 - include_tasks: "restore_files.yml"
-  when: 
-    backup_restore_home == True
+  when:
+    backup_restore_home
 
 - name: Mark restore performed
   lineinfile:

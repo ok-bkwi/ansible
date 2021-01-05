@@ -22,7 +22,7 @@ lvm_roles_supported:
   - awx
   - guacamole
   - docker
-  - reverse-proxy
+  - reverse_proxy
 
 lvm_roles:
   nfs:
@@ -64,6 +64,6 @@ lvm_roles:
   myapp:
     size: '1g' 
     path: '{{ myapp_home if myapp_home is defined else "/opt/myapp" }}'
-  reverse-proxy:
+  reverse_proxy:
     size: '1g'
     path: '/var/log/httpd/'

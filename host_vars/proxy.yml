@@ -91,6 +91,9 @@ env_ldap_auth:
   bind_pw: "{{ opendj_password }}"
 
 env_ldap_basedn: dc=cicd,dc=tech
+opendj_basedn: "{{ env_ldap_basedn }}"
+opendj_basedn_part1: "cicd"
+opendj_basedn_part2: "tech"
 
 env_users:
   - {uid: akaufman, cn: Andy Kaufman, givenName: Andy, sn: Kaufman, mail: andy.kaufman@cicd.tech, employeeNumber: 1, userPassword: secret, description: Admin}

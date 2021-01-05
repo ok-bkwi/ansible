@@ -25,10 +25,11 @@
 #- name: copy backend props file
 #  template: src=backend.properties.j2 dest=/tmp/backend.properties
 
-- name: Copy cicd ldif
-  copy:
-   dest: "{{ opendj_ldif_file }}"
-   src: cicd.ldif
+- name: Initial ldif
+  template:
+    dest: "{{ opendj_ldif_file }}"
+    src: initial.ldif.j2
+    mode: 0644
 
 - name: Setup
   command: "{{install_root}}/opendj/setup --cli --propertiesFilePath /tmp/opendj.properties --acceptLicense --no-prompt --doNotStart"

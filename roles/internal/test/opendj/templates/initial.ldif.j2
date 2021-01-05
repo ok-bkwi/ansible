@@ -1,29 +1,29 @@
 # https://github.com/ghchinoy/forgerock-docker/blob/master/ldifs/Example.ldif
-dn: dc=tech
+dn: dc={{ opendj_basedn_part2 }}
 objectClass: domain
 objectClass: top
-dc: tech
+dc: {{ opendj_basedn_part2 }}
 
-dn: dc=seetoo,dc=tech
+dn: {{ opendj_basedn }}
 objectClass: domain
 objectClass: top
-dc: seetoo
+dc: {{ opendj_basedn_part1 }}
 
-dn: ou=groups,dc=seetoo,dc=tech
+dn: ou=groups,{{ opendj_basedn }}
 objectClass: organizationalUnit
 objectClass: top
 ou: groups
 
 # Create ACI on people container that lets users in admins group administer objects under people
-dn: ou=people,dc=seetoo,dc=tech
+dn: ou=people,{{ opendj_basedn }}
 objectClass: organizationalunit
 objectClass: top
 ou: people
 aci: (targetattr="*")(version 3.0; acl "give admins full rights"; allow(all)
-  groupdn =  "ldap:///cn=admins,ou=groups,dc=seetoo,dc=tech";)
+  groupdn =  "ldap:///cn=admins,ou=groups,{{ opendj_basedn }}";)
 
 # Create Admin user. Give them privs to reset passwords
-# dn: uid=admin,ou=people,dc=seetoo,dc=tech
+# dn: uid=admin,ou=people,{{ opendj_basedn }}
 # objectClass: inetorgperson
 # objectClass: organizationalperson
 # objectClass: person
@@ -40,8 +40,8 @@ aci: (targetattr="*")(version 3.0; acl "give admins full rights"; allow(all)
 # ds-privilege-name: password-reset
 
 # Create admins group - put admin user in that group
-dn: cn=admins,ou=groups,dc=seetoo,dc=tech
+dn: cn=admins,ou=groups,{{ opendj_basedn }}
 objectClass: groupOfNames
 objectClass: top
 cn: admins
-# member: uid=admin,ou=people,dc=seetoo,dc=tech
+# member: uid=admin,ou=people,{{ opendj_basedn }}

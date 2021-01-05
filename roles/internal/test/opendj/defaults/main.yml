@@ -21,6 +21,8 @@ opendj_ldif_file: /tmp/cicd.ldif
 
 # BaseDN
 opendj_basedn: "dc=seetoo,dc=tech"
+opendj_basedn_part1: "seetoo"
+opendj_basedn_part2: "tech"
 
 opendj_ldap_port: 389
 opendj_ldaps_port: 636

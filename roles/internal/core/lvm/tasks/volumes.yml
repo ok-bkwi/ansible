@@ -17,13 +17,14 @@
   file:
     path: "{{ lvm_roles[item]['path'] }}"
     state: directory
+    mode: 0755
   with_items: "{{ lvm_roles_node }}"
 
-- name: Mount 
+- name: Mount
   mount:
     path: "{{ lvm_roles[item]['path'] }}"
     src: "/dev/mapper/{{ lvm_vg }}-{{ item|replace('-', '--') }}"
     fstype: "{{ lvm_fstype }}"
-    opts: "{{ lvm_roles[item]['opts']|default(omit)}}"
+    opts: "{{ lvm_roles[item]['opts']|default(omit)} }"
     state: mounted
   with_items: "{{ lvm_roles_node }}"

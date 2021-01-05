@@ -28,5 +28,6 @@
       export PATH=$PATH:{{ oracle_client_bin_path }}
       export LD_LIBRARY_PATH={{ oracle_client_lib_path }}:$LD_LIBRARY_PATH
       export NLS_LANG=american_america.al32utf8
-    dest: /etc/profile.d/oracle.sh 
+    dest: /etc/profile.d/oracle.sh
+    mode: 0644
   when: oracle_client_bin_path is defined

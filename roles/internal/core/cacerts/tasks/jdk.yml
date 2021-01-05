@@ -14,7 +14,7 @@
 - name: "Import bundles in JDK cacert"
   java_cert:
     cert_alias: "{{ item['name'] }}"
-    cert_path: "/tmp/{{ item['url']|basename }}" 
+    cert_path: "/tmp/{{ item['url']|basename }}"
     keystore_path: "{{ jdk_version|java_keystore }}"
     keystore_pass: "changeit" # TODO
     executable: "{{ jdk_version|java_keytool }}"

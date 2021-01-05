@@ -7,7 +7,7 @@
 - name: "Import downloaded certs / bundles for role"
   java_cert:
     cert_alias: "{{ item['name'] }}"
-    cert_path: "/tmp/{{ item['url']|basename }}" 
+    cert_path: "/tmp/{{ item['url']|basename }}"
     keystore_path: "{{ cacerts_roles[role].keystore_path }}"
     keystore_pass: "{{ cacerts_roles[role].keystore_pass }}"
     executable: "{{ cacerts_roles[role].executable|default(omit) }}"
@@ -18,7 +18,7 @@
 
 - name: "Import trusted sites SSL cert in keystore for {{ role }}"
   java_cert:
-    cert_alias: "{{ item['name'] }}"    
+    cert_alias: "{{ item['name'] }}"
     cert_url: "{{ item['url'] }}"
     cert_port: "{{ item['port'] }}"
     keystore_path: "{{ cacerts_roles[role].keystore_path }}"
@@ -30,4 +30,3 @@
   when: role_keystore_stat.stat.exists
   environment:
     https_proxy: "{{ cacerts_java_cert_proxy|default(omit) }}"
-   

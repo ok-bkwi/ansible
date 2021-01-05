@@ -8,20 +8,21 @@
     adoptopenjdk_java_home: "/usr/lib/jvm/{{ adoptopenjdk_java_folder }}"
 
 - name: Check installed
-  stat: 
+  stat:
     path: '{{ adoptopenjdk_java_home }}/bin/java'
   register: jdk_installed
 
-- name: Download 
-  get_url: 
+- name: Download
+  get_url:
     url: "{{ adoptopenjdk.versions[adoptopenjdk.version].url }}"
     dest: "/tmp/{{ adoptopenjdk_java_folder }}"
-    checksum: "sha256:{{ adoptopenjdk.versions[adoptopenjdk.version].checksum }}" 
+    checksum: "sha256:{{ adoptopenjdk.versions[adoptopenjdk.version].checksum }}"
 
 - name: Create java_home
   file:
     path: '{{ adoptopenjdk_java_home }}'
     state: directory
+    mode: 0755
 
 - name: Unarchive
   unarchive:
@@ -31,9 +32,9 @@
     remote_src: yes
 
 - name: Java home in etc environment
-  lineinfile: 
-    dest: /etc/environment 
-    regexp: '^JAVA_HOME'  
+  lineinfile:
+    dest: /etc/environment
+    regexp: '^JAVA_HOME'
     line: 'JAVA_HOME={{ adoptopenjdk_java_home }}'
   when: adoptopenjdk_java_home_etc_environment == 'true'
 
@@ -42,4 +43,3 @@
     src: jdk.sh.j2
     dest: /etc/profile.d/jdk.sh
     mode: 0644
-    

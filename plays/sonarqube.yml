@@ -5,7 +5,7 @@
 
   roles:
     - { role: common,                       tags: ["common"] }
-    - { role: postgresql-client,            tags: ["postgresql"] }    
+    - { role: postgresql_client,            tags: ["postgresql"] }    
     - { role: java,                         tags: ["java"] }
     - { role: https_proxy,                  tags: ["proxy"] }
     - { role: sonarqube,                    tags: ["sonarqube"] }

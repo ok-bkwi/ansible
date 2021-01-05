@@ -1,5 +1,5 @@
 ---
-- name: Ansible roles names without prefix 
+- name: Ansible roles names without prefix
   set_fact:
     ansible_role_names_cleaned: "{{ ansible_role_names|
                  map('regex_replace', regex, replace)|
@@ -23,7 +23,7 @@
 
 - name: LCM info facts
   debug:
-    msg: 
+    msg:
       - "{{ item }}_lcm['operation']: {{ vars[item + '_lcm']['operation']|default('not defined') }}"
       - "{{ item }}_lcm_operation: {{ vars[item + '_lcm_operation']|default('not defined') }}"
       - "{{ item }}_lcm['version-file']: {{ vars[item + '_lcm']['version-file']|default('not defined') }}"
@@ -31,8 +31,8 @@
       - "{{ item }}_version: {{ vars[item + '_version']|default('not defined') }}"
       - "{{ item }}_home: {{ vars[item + '_home']|default('not defined') }}"
       - "{{ item }}_database_name_version: {{ vars[item + '_database_name_version']|default('not defined') }}"
-      - "{{ item }}_database_name_version_backup: {{ vars[item + '_database_name_version_backup']|default('not defined') }}"      
-      - "{{ item }}_database_template: {{ vars[item + '_database_template']|default('not defined') }}"      
+      - "{{ item }}_database_name_version_backup: {{ vars[item + '_database_name_version_backup']|default('not defined') }}"
+      - "{{ item }}_database_template: {{ vars[item + '_database_template']|default('not defined') }}"
       - "{{ item }}_home_version: {{ vars[item + '_home_version']|default('not defined') }}"
       - "{{ item }}_home_version_current: {{ vars[item + '_home_version_current']|default('not defined') }}"
       - "{{ item }}_home_version_home: {{ vars[item + '_home_version_home']|default('not defined') }}"
@@ -43,8 +43,8 @@
       - "{{ item }}_home_link_home: {{ vars[item + '_home_link_home']|default('not defined') }}"
       - "{{ item }}_home_link_app: {{ vars[item + '_home_link_app']|default('not defined') }}"
       - "{{ item }}_home_link_app: {{ vars[item + '_home_link_app']|default('not defined') }}"
-      - "{{ item }}_home_backup: {{ vars[item + '_home_backup']|default('not defined') }}"      
-      - "{{ item }}_home_backup_version: {{ vars[item + '_home_backup_version']|default('not defined') }}"  
-      - "{{ item }}_home_version_prepare: {{ vars[item + '_home_version_prepare']|default('not defined') }}"      
-      - "{{ item }}_home_version_home_prepare: {{ vars[item + '_home_version_home_prepare']|default('not defined') }}"  
+      - "{{ item }}_home_backup: {{ vars[item + '_home_backup']|default('not defined') }}"
+      - "{{ item }}_home_backup_version: {{ vars[item + '_home_backup_version']|default('not defined') }}"
+      - "{{ item }}_home_version_prepare: {{ vars[item + '_home_version_prepare']|default('not defined') }}"
+      - "{{ item }}_home_version_home_prepare: {{ vars[item + '_home_version_home_prepare']|default('not defined') }}"
   with_items: '{{ lcm_roles_node }}'

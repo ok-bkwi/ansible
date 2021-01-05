@@ -10,7 +10,7 @@
 - name: execute update-ca-trust
   command: update-ca-trust
   with_items: '{{ cadownload.results }}'
-  when: 
+  when:
     - cadownload.results is defined
     - item.changed
     - cacerts_os_ca_pem_urls is defined

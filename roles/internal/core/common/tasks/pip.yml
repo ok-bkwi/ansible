@@ -19,7 +19,7 @@
     dest: "{{ common_pip_ca_trust_store }}/{{ common_pip_ca_bundle_url | basename }}"
   when: common_pip_ca_bundle_url is defined
 
-- name: Upgrade pip
+- name: Upgrade pip # noqa 301
   command:
     cmd: "pip install --upgrade pip"
 

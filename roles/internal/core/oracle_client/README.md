@@ -1,4 +1,4 @@
-# Ansible Role: oracle-client
+# Ansible Role: oracle_client
 
 An Ansible Role that can installs Oracle client RPM's by downloading these from [download.oracle.com](https://download.oracle.com/) on RedHat/CentOS. 
 

@@ -5,5 +5,6 @@
     owner: "{{ item }}"
     group: "{{ item }}"
     src: config.json.j2
-  with_items: "{{ docker_proxy_users }}" 
+    mode: 0644
+  with_items: "{{ docker_proxy_users }}"
   notify: restart docker

@@ -1,4 +1,4 @@
-# TPELCM Ansible Repository
+# C2 Platform Ansible Repository
 
 This purpose of this repository is to automate Life Cycle Management (LCM) procedures using Ansible.
 
@@ -93,8 +93,8 @@ This repository has been used with:
 
 Git clone this repository for example to `~/ansible`. 
 
-git clone 
-cd ~/ansible
+    git clone https://github.com/c2platform/ansible.git
+    cd ~/ansible
 
 Note: if you run a vagrant command for example `vagrant status` a [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) password stored in the file `~/ansible/vpass` with content `secret` in root of the repository directory. This is used by Ansible vault for encrypting and decrypting [secrets](SECRETS.md). 
 

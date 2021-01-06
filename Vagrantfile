@@ -45,7 +45,7 @@ Vagrant.configure(2) do |config|
       plays = ENV['PLAY'] ? [ENV['PLAY']] : a['plays']
       plays.each do |p|
         cfg.vm.provision 'ansible' do |ansible|
-          ansible.config_file = 'ansible.cfg'
+          ansible.config_file = 'ansible-dev.cfg'
           ansible.playbook = "plays/#{p}.yml"
           ansible.compatibility_mode = '2.0'
           ansible.inventory_path = 'development.ini'

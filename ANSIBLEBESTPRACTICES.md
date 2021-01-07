@@ -171,6 +171,9 @@ Code in this repo is functional and tested. To run it, you need to install ansib
 ansible-playbook -i ../development.ini webservers.yml
 ```
 
+# Further reading
+
+* [Ansible best practices: using project-local collections and roles](https://www.jeffgeerling.com/blog/2020/ansible-best-practices-using-project-local-collections-and-roles) 
 
 # License
 MIT License.

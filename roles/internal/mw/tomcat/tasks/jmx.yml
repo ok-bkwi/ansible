@@ -1,0 +1,32 @@
+---
+- name: JMX access
+  template:
+    src: jmx.properties.j2
+    dest: "{{ tomcat_jmx.properties_folder }}/jmx.access"
+    mode: 0644
+  vars:
+    props: "{{ tomcat_jmx.access }}"
+  when:
+    - tomcat_jmx.enable
+    - tomcat_jmx.access is defined
+
+- name: JMX access
+  template:
+    src: jmx.properties.j2
+    dest: "{{ tomcat_jmx.properties_folder }}/jmx.password"
+    mode: 0644
+  vars:
+    props: "{{ tomcat_jmx.password }}"
+  when:
+    - tomcat_jmx.enable
+    - tomcat_jmx.password is defined
+
+- name: JMX access disable
+  file:
+    path: "{{ tomcat_jmx.properties_folder }}/jmx.{{ item }}"
+    state: absent
+  with_items:
+    - access
+    - password
+  when:
+    - not tomcat_jmx.enable

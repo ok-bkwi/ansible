@@ -7,3 +7,5 @@
     loop_var: app
   when:
     - tomcat_apps is defined
+
+- include: jmx.yml

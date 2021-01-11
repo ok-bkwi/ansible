@@ -10,7 +10,7 @@
     - tomcat_jmx.enable
     - tomcat_jmx.access is defined
 
-- name: JMX access
+- name: JMX password
   template:
     src: jmx.properties.j2
     dest: "{{ tomcat_jmx.properties_folder }}/jmx.password"

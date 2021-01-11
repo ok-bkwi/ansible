@@ -1,0 +1,10 @@
+---
+tomcat_jmx:
+  enable: false
+  properties_folder: /etc/tomcat/
+  access:
+    monitorRole: readonly
+    controlRole: readwrite
+  password:
+      monitorRole: password
+      controlRole: password

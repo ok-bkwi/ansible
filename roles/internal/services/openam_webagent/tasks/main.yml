@@ -4,7 +4,7 @@
     path: "{{ openam_webagent_home }}/notexists"
   register: openam_webagent_install_path
 
-- name: Web Agent home 
+- name: Web Agent home
   file:
     path: "{{ openam_webagent_home }}"
     state: directory

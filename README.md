@@ -71,14 +71,22 @@ Install Ansible, Vagrant, VirtualBox on Ubuntu 18.04 machine.
 
 ### Ansible
 
-Add the Ansible repository and install [Ansible](https://ansible.com).
+Install [Ansible](https://ansible.com) via Pip with Python 3 is recommended Add. E.g. in `~/.bashrc`
 
-    sudo add-apt-repository ppa:ansible/ansible
-    sudo apt-get install ansible
+```    
+alias python='python3'
+alias pip='pip3'
+```
+
+And then 
+
+    pip install ansible
 
 This repository has been used with:
 1. Ansible 2.8.3 and Python 2.7.15. 
 2. Ansible 2.10.3 and Python 3.6.9.  
+
+Python 3 is recommended for the Vagrant dev / control node. 
 
 ### Vagrant
 

@@ -8,5 +8,7 @@ lcm_roles:
   - guacamole
   - awx
   - myapp
+  - openam 
+  - opends
 
 lcm_write_version_file: no

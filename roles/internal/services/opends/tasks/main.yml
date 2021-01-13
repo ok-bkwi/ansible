@@ -1,0 +1,27 @@
+---
+- name: Create owner
+  user:
+    name: "{{ opends_owner }}"
+    shell: /bin/bash
+    system: true
+
+- name: Create home
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ opends_owner }}"
+    group: "{{ opends_group }}"
+    mode: 0755
+  with_items: 
+    - "{{ opends_home }}"
+    - "{{ opends_home_version }}"
+    - "{{ opends_home_version }}/downloads"
+
+- name: Home link
+  file:
+   src: "{{ opends_home_version }}"
+   dest: "{{ opends_home_link }}"
+   state: link
+
+- include: download.yml
+- include: install.yml

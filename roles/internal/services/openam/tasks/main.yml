@@ -1,2 +1,27 @@
 ---
+- name: Create owner
+  user:
+    name: "{{ openam_owner }}"
+    shell: /bin/bash
+    system: true
+
+- name: Create home
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ openam_owner }}"
+    group: "{{ openam_group }}"
+    mode: 0755
+  with_items:
+    - "{{ openam_home }}"
+    - "{{ openam_home_version }}"
+    - "{{ openam_home_version }}/downloads"
+
+- name: Home link
+  file:
+   src: "{{ openam_home_version }}"
+   dest: "{{ openam_home_link }}"
+   state: link
+
+- include: download.yml
 - include: install.yml

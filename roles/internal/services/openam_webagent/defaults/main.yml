@@ -1,0 +1,10 @@
+---
+openam_webagent_version: 4.1.1
+
+openam_webagent_versions:
+  4.1.1:
+    url: https://github.com/OpenIdentityPlatform/OpenAM-Web-Agents/releases/download/4.1.1/Apache_v24_Linux_64bit_4.1.1.zip
+    checksum: "sha256: 889776a37382b05c768efa89d8d678fc7e9f205695cd38cbbf950ca1cf670235"
+
+openam_webagent_home: /opt/openam-webagent
+openam_webagent_install_path: "{{ openam_webagent_home }}/web_agents/apache24_agent/"

@@ -1,0 +1,25 @@
+---
+- name: Stat web agent install path
+  stat:
+    path: "{{ openam_webagent_home }}/notexists"
+  register: openam_webagent_install_path
+
+- name: Web Agent home 
+  file:
+    path: "{{ openam_webagent_home }}"
+    state: directory
+    mode: 0755
+
+- name: Download Web Agent
+  get_url:
+    url: "{{ openam_webagent_versions[openam_webagent_version]['url'] }}"
+    checksum: "{{ openam_webagent_versions[openam_webagent_version]['checksum'] }}"
+    dest: "/tmp/{{ openam_webagent_versions[openam_webagent_version]['url']|basename }}"
+  when: not openam_webagent_install_path.stat.exists
+
+- name: Unzip Apache Web Agent
+  unarchive:
+    dest: "{{ openam_webagent_home }}"
+    src: "/tmp/{{ openam_webagent_versions[openam_webagent_version]['url']|basename }}"
+#    extra_opts: --strip-components=2 # does not work with zip files
+    remote_src: yes

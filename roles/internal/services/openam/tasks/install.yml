@@ -14,10 +14,21 @@
     group: tomcat
     mode: 0755
 
-- name: Download OpenAM war
-  get_url:
-    url: "{{ openam_versions[openam_version]['url'] }}"
-    checksum: "{{ openam_versions[openam_version]['checksum'] }}"
-    dest: /opt/tomcat/webapps/openam.war
-    mode: "755"
-  notify: restart tomcat instance
+#- name: Unzip
+#  unarchive:
+#    dest: "{{ openam_home_link }}"
+#    owner: "{{ openam_owner }}"
+#    group: "{{ openam_group }}"
+#    remote_src: yes
+#    src: "{{ openam_home_link }}/downloads/{{ openam_versions[openam_version]['url']|basename }}"
+
+
+
+#- name: Download OpenAM war
+#  get_url:
+#    url: "{{ openam_versions[openam_version]['url'] }}"
+#    checksum: "{{ openam_versions[openam_version]['checksum'] }}"
+#    dest: /opt/tomcat/webapps/openam.war
+#    mode: "755"
+#  notify: restart tomcat instance
+

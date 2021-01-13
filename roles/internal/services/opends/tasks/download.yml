@@ -1,0 +1,12 @@
+---
+- name: Download zip
+  get_url:
+    url: "{{ opends_versions[opends_version]['url'] }}"
+    dest: "{{ opends_home_link }}/downloads/{{ opends_versions[opends_version]['url']|basename }}"
+    checksum: "{{ opends_versions[opends_version]['checksum'] }}"
+    timeout: 300
+    mode: 1373
+    owner: "{{ opends_owner }}"
+    group: "{{ opends_group }}"
+  register: get_url_result
+  until: get_url_result is succeeded

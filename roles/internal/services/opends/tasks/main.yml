@@ -12,7 +12,7 @@
     owner: "{{ opends_owner }}"
     group: "{{ opends_group }}"
     mode: 0755
-  with_items: 
+  with_items:
     - "{{ opends_home }}"
     - "{{ opends_home_version }}"
     - "{{ opends_home_version }}/downloads"

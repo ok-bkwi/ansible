@@ -1,20 +1,21 @@
 ---
 - name: Unzip
   unarchive:
-    dest: "{{ opends_home_link }}"
-    owner: "{{ opends_owner }}"
-    group: "{{ opends_group }}"
+    dest: "{{ ds_home_link }}"
+    owner: "{{ ds_owner }}"
+    group: "{{ ds_group }}"
     remote_src: yes
-    src: "{{ opends_home_link }}/downloads/{{ opends_versions[opends_version]['url']|basename }}"
+    src: "{{ ds_home_link }}/downloads/{{ ds_versions[ds_version]['url']|basename }}"
 
 # Check setup performed
 - name: Stat config dir
   stat:
-    path: "{{ opends_home_link }}/opendj/config/"
+    path: "{{ ds_home_link }}/opendj/config/"
   register: config_dir
 
+# Check dat ie ook in opendj/user komt!
 #- name: Status
 #  command: 
-#    cmd: "{{ opends_home_link }}/opendj/bin/status --offline"
-#  register: opends_status
+#    cmd: "{{ ds_home_link }}/opendj/bin/status --offline"
+#  register: ds_status
 #  ignore_errors: yes

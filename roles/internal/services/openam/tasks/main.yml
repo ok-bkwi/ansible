@@ -1,7 +1,7 @@
 ---
 - name: Create owner
   user:
-    name: "{{ openam_owner }}"
+    name: "{{ am_owner }}"
     shell: /bin/bash
     system: true
 
@@ -9,19 +9,22 @@
   file:
     path: "{{ item }}"
     state: directory
-    owner: "{{ openam_owner }}"
-    group: "{{ openam_group }}"
+    owner: "{{ am_owner }}"
+    group: "{{ am_group }}"
     mode: 0755
   with_items:
     - "{{ openam_home }}"
-    - "{{ openam_home_version }}"
-    - "{{ openam_home_version }}/downloads"
+    - "{{ openam_home }}/{{ openam_version }}"
+    - "{{ openam_home }}/{{ openam_version }}/downloads"
 
-- name: Home link
-  file:
-   src: "{{ openam_home_version }}"
-   dest: "{{ openam_home_link }}"
-   state: link
 
 - include: download.yml
 - include: install.yml
+
+#- name: Home link
+# Not clear what was meant to be done with this Symlink, hence deactivated for now.
+#  file:
+#   src: "{{ openam_version }}"
+#   dest: "{{ am_home_link }}"
+#   state: link
+

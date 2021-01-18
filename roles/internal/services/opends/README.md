@@ -1,7 +1,7 @@
-#  Ansible OpenDS Role
+#  Ansible (Open)DS Role
 
 
-## Links
+## Links. Extend, this needs to happen twice for the config and user directories
 
 In `/opt/opends/opends/opendj/bin/`
 

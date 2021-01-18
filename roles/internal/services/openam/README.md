@@ -1,14 +1,20 @@
-Ansible OpenAM Role
+Ansible AM Role
 =========
 
-This role installs OpenAM on your target host.
+This role installs ForgeRock AM (commercial version) on your target host. During development we sometimes use the open source version OpenAM, but in
+the end what BKWI needs is AM.
 
 Note: This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
+One shortcoming is that in present stage the Vagrant name remains 'openam', and as a consequence some of the variables
+used in the playbook/role cannot start with 'am' but need 'openam'. This will change later.
 
 Requirements
 ------------
 
 Ansible
+Note that the 'Amster' utility part of the AM install connects with a ForgeRock DS server.
+Hence requirement is that the configured DS server already is up and running. If testing is done on a combined DS/AM node, the DS role hence
+has to run before the AM role. If testing is done with separate nodes, provisioning if the DS node goes first.
 
 Role Variables
 --------------
@@ -32,4 +38,4 @@ Including an example of how to use your role (for instance, with variables passe
          - role: openam
 
 Tomcat start on http://domain:8080
-OpenAm available on http://domain:8080/openam
+OpenAm available on http://domain:8080/am

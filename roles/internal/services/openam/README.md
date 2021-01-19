@@ -14,7 +14,9 @@ Requirements
 Ansible
 Note that the 'Amster' utility part of the AM install connects with a ForgeRock DS server.
 Hence requirement is that the configured DS server already is up and running. If testing is done on a combined DS/AM node, the DS role hence
-has to run before the AM role. If testing is done with separate nodes, provisioning if the DS node goes first.
+has to run before the AM role. If testing is done with separate nodes, provisioning if the DS node goes first. A suggested
+enhancement is to do a CURL-like test to check connectivity with the DS node before running the Amster role, and halting if
+it cannot be reached.
 
 Role Variables
 --------------

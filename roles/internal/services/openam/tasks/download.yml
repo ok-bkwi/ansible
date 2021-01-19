@@ -1,5 +1,5 @@
 ---
-- name: Download zip/war file
+- name: Download war file
   get_url:
     url: "{{ openam_versions[openam_version]['url'] }}"
     dest: "{{ openam_home }}/{{ openam_version }}/downloads/{{ openam_versions[openam_version]['url']|basename }}"

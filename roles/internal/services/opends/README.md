@@ -1,9 +1,11 @@
 #  Ansible (Open)DS Role
 
 
-## Links. Extend, this needs to happen twice for the config and user directories
+## Links. Extend, this needs to happen twice for the config and user directories. Also have a check with start-ds.sh that it runs!
+Zie /roles/internal/test/opendj/templates/opendj.service.j2:ExecStart=/opt/opendj/bin/start-ds
 
-In `/opt/opends/opends/opendj/bin/`
+
+In `/opt/ds/opendj`
 
 ```bash
 ./setup directory-server \

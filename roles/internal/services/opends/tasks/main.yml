@@ -13,15 +13,9 @@
     group: "{{ ds_group }}"
     mode: 0755
   with_items:
-    - "{{ ds_home }}"
-    - "{{ ds_home_version }}"
-    - "{{ ds_home_version }}/downloads"
-
-- name: Home link
-  file:
-   src: "{{ ds_home_version }}"
-   dest: "{{ ds_home_link }}"
-   state: link
-
+    - "{{ opends_home }}" 
+    - "{{ opends_home}}/downloads"
+    - "{{ opends_home }}/{{opends_version}}"
+       
 - include: download.yml
 - include: install.yml

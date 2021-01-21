@@ -23,7 +23,6 @@
     remote_src: yes
     src: "{{ openam_home }}/{{ openam_version }}/downloads/{{ openam_versions[openam_version]['url']|basename }}"
 
-
 - name: Download (Open)AM war, this time put it in Tomcat webapps directory. 
 # Could be simplified as a simple copy from the source dir, but both the DEV situation (URL is a local file) and the TAP situations (URL is a local git-like server)
 # don't really justify putting effort in this small code change.

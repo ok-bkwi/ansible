@@ -7,4 +7,3 @@
     - { role: common,               tags: ["common"] }
     - { role: java,                 tags: ["java"] }
     - { role: robertdebock.tomcat,  tags: ["tomcat"] } 
-

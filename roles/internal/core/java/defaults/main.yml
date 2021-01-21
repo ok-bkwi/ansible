@@ -9,6 +9,4 @@ adoptopenjdk:
       url: https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.4%2B11_openj9-0.15.1/OpenJDK11U-jdk_x64_linux_openj9_11.0.4_11_openj9-0.15.1.tar.gz
       checksum: b1099cccc80a3f434728c9bc3b8a90395793b625f4680ca05267cf635143d64d
 
-adoptopenjdk_java_home_etc_environment: true
-# Modified for Forgerock, especially DS needs this JAVA_HOME to be set on (re-)startup of a VM node
 

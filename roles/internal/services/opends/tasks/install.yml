@@ -1,7 +1,7 @@
 ---
 - name: Unzip
   unarchive:
-    dest: "{{ opends_home }}/{{ opends_version }}"
+    dest: "{{ opends_home }}/{{ opends_version }}/config"
     owner: "{{ ds_owner }}"
     group: "{{ ds_group }}"
     remote_src: yes
@@ -10,11 +10,10 @@
 # Check setup performed
 - name: Stat config dir
   stat:
-    path: "{{ opends_home }}/opendj/{{ opends_version }}/config/"
+    path: "{{ opends_home }}/{{ opends_version }}/config"
   register: config_dir
   
-  
-  
+   
   
 #  NU het runcommando en check of ie draait. Daarna herhalen van unzip, directory aanmaak en run voor user. Tot slot, apart, dezelfde check of ie draait maar dan met ds-start.sh als remedie 
 

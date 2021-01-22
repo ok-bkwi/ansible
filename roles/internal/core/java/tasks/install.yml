@@ -36,7 +36,7 @@
     dest: /etc/environment
     regexp: '^JAVA_HOME'
     line: 'JAVA_HOME={{ adoptopenjdk_java_home }}'
-  when: adoptopenjdk_java_home_etc_environment == 'true'
+  when: adoptopenjdk_java_home_etc_environment|default(False)
 
 - name: Profile jdk sh
   template:

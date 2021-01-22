@@ -13,8 +13,9 @@
     path: "{{ opends_home }}/{{ opends_version }}/config"
   register: config_dir
   
-   
-  
+- debug: Toon variable
+    msg: "{{ opends_install_config }}" 
+ 
 #  NU het runcommando en check of ie draait. Daarna herhalen van unzip, directory aanmaak en run voor user. Tot slot, apart, dezelfde check of ie draait maar dan met ds-start.sh als remedie 
 
 # Check dat ie ook in opendj/user komt!

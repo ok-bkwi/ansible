@@ -12,11 +12,28 @@
   stat:
     path: "{{ opends_home }}/{{ opends_version }}/config"
   register: config_dir
-  
-- debug: Toon variable
-    msg: "{{ opends_install_config }}" 
- 
-#  NU het runcommando en check of ie draait. Daarna herhalen van unzip, directory aanmaak en run voor user. Tot slot, apart, dezelfde check of ie draait maar dan met ds-start.sh als remedie 
+
+#opends_setup_config:
+#  rootUserDN: "cn=Directory Manager"
+#  rootUserPassword: FRdemo123
+#  monitorUserPassword: FRdemo123
+#  hostname: {{ opends_hostname }}
+#  ldapPort: 3389
+#  ldapsPort: 3636
+#  adminConnectorPort: 34444
+#  profile: am-config
+#  set: am-config/amConfigAdminPassword:FRdemo123
+#  acceptLicense:
+
+# ./setup directory-server 
+
+- debug:
+    var: opends_setup_config
+
+- name: Setup OpenDS
+  command:
+    cmd: "./setup directory-server {{ opends_setup_config|opends_cmd }}"
+  register: ds_setup_status
 
 # Check dat ie ook in opendj/user komt!
 #- name: Status

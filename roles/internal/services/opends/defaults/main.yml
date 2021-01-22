@@ -19,16 +19,16 @@ opends_hostname: fr1.example.com
 # Probably overwritten in the group_vars for a specific play, eg. with a nip.io adress
 
 opends_setup_config:
-  rootUserDN: "cn=Directory Manager"
+  rootUserDN: '"cn=Directory Manager"'
   rootUserPassword: FRdemo123
   monitorUserPassword: FRdemo123
   hostname: "{{ opends_hostname }}"
-#  ldapPort: 3389
-#  ldapsPort: 3636
-#  adminConnectorPort: 34444
-#  profile: am-config
-#  set: am-config/amConfigAdminPassword:FRdemo123
-#  acceptLicense:
+  ldapPort: 3389
+  ldapsPort: 3636
+  adminConnectorPort: 34444
+  profile: am-config
+  set: am-config/amConfigAdminPassword:FRdemo123
+  acceptLicense:
 
 # ./setup directory-server 
 # --rootUserDN "cn=Directory Manager" 

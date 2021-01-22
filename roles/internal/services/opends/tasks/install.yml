@@ -28,7 +28,7 @@
 # ./setup directory-server 
 
 - debug:
-    var: opends_setup_config
+    msg: "Command: {{ opends_setup_config|opends_cmd }}"
 
 - name: Setup OpenDS
   command:

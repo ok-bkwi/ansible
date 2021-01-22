@@ -22,7 +22,8 @@
 - include: install.yml
 
 #- name: Home link
-# Not clear what was meant to be done with this Symlink, hence deactivated for now.
+# Deactivated for now; the intention is that in case multiple versions exist in one server, the symlink
+# (e.g. from a systemd.service file) can go to the symlink instead of a physical binary.
 #  file:
 #   src: "{{ openam_version }}"
 #   dest: "{{ am_home_link }}"

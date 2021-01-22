@@ -1,9 +1,3 @@
----
-- name: "Install required packages"
-  package:
-    name: "{{ am_packages }}"
-    state: present
-
 # (Open)AM won't start without home directory
 # and robertdebock.tomcat does not create tomcat home directory
 # Probably not needed anymore as we now use forgerock user for tomcat, and main.yml already creates that home directory.
@@ -17,12 +11,11 @@
 
 - name: Unzip the .war file
   unarchive:
-    dest: "{{ am_home_link }}"
+    dest: "{{ openam_home }}"
     owner: "{{ am_owner }}"
     group: "{{ am_group }}"
     remote_src: yes
     src: "{{ openam_home }}/{{ openam_version }}/downloads/{{ openam_versions[openam_version]['url']|basename }}"
-
 
 - name: Download (Open)AM war, this time put it in Tomcat webapps directory.
 # Could be simplified as a simple copy from the source dir, but both the DEV situation (URL is a local file) and the TAP situations (URL is a local git-like server)

@@ -1,5 +1,5 @@
 ---
-- name: Unzip
+- name: Unzip config
   unarchive:
     dest: "{{ opends_home }}/{{ opends_version }}/config"
     owner: "{{ ds_owner }}"
@@ -13,31 +13,59 @@
     path: "{{ opends_home }}/{{ opends_version }}/config"
   register: config_dir
 
-#opends_setup_config:
-#  rootUserDN: "cn=Directory Manager"
-#  rootUserPassword: FRdemo123
-#  monitorUserPassword: FRdemo123
-#  hostname: {{ opends_hostname }}
-#  ldapPort: 3389
-#  ldapsPort: 3636
-#  adminConnectorPort: 34444
-#  profile: am-config
-#  set: am-config/amConfigAdminPassword:FRdemo123
-#  acceptLicense:
-
-# ./setup directory-server 
-
 - debug:
     msg: "Command: {{ opends_setup_config|opends_cmd }}"
 
-- name: Setup OpenDS
-  command:
-    cmd: "./setup directory-server {{ opends_setup_config|opends_cmd }}"
+- name: Setup OpenDS config
+  command: "./setup directory-server {{ opends_setup_config|opends_cmd }}"
+  become: yes
+  become_user: forgerock 
+  args:
+    chdir: "{{ opends_home }}/{{ opends_version }}/config/opendj"
   register: ds_setup_status
+  
+- name: Status
+  command: "{{ opends_home }}/{{ opends_version }}/config}}/opendj/bin/status --offline"
+  become: yes
+  become_user: forgerock
+  register: ds_status
+  ignore_errors: yes
+  
+# End of section for config DS instance
+  
+- name: Unzip User
+  unarchive:
+    dest: "{{ opends_home }}/{{ opends_version }}/user"
+    owner: "{{ ds_owner }}"
+    group: "{{ ds_group }}"
+    remote_src: yes
+    src: "{{ opends_home }}/downloads/{{ ds_versions[opends_version]['url']|basename }}"
 
-# Check dat ie ook in opendj/user komt!
-#- name: Status
-#  command: 
-#    cmd: "{{ ds_home}}/opendj/bin/status --offline"
-#  register: ds_status
-#  ignore_errors: yes
+# Check setup performed
+- name: Stat config dir
+  stat:
+    path: "{{ opends_home }}/{{ opends_version }}/user"
+  register: config_dir
+
+- debug:
+    msg: "Command: {{ opends_setup_user|opends_cmd }}"
+
+- name: Setup OpenDS
+  command: "./setup directory-server {{ opends_setup_user|opends_cmd }}"
+  become: yes
+  become_user: forgerock 
+  args:
+    chdir: "{{ opends_home }}/{{ opends_version }}/user/opendj"
+  register: ds_setup_status
+  
+- name: Status
+  command: "{{ opends_home }}/{{ opends_version }}/user}}/opendj/bin/status --offline"
+  become: yes
+  become_user: forgerock
+  register: ds_status
+  ignore_errors: yes
+
+#  TODO: service-model (ds-start.sh)
+
+
+

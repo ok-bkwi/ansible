@@ -28,22 +28,23 @@ opends_setup_config:
   adminConnectorPort: 34444
   profile: am-config
   set: am-config/amConfigAdminPassword:FRdemo123
-  acceptLicense:
-
-# ./setup directory-server 
-# --rootUserDN "cn=Directory Manager" 
-# --rootUserPassword FRdemo123  
-# --monitorUserPassword FRdemo123 
-# --hostname {{ opends_hostname }} 
-# --ldapPort 3389 
-# --ldapsPort 3636 
-# --adminConnectorPort 34444 
-# --profile am-config 
-# --set am-config/amConfigAdminPassword:FRdemo123 
-# --acceptLicense
-
-
-
+  acceptLicense: ""
+  
+  
+# There extra fields are in the specs-docoument in case of PRD.  Simply add them to the config string by uncommenting when needed.
 # --productionMode 
 # --httpPort 38081 
 # --httpsPort 38443 
+
+
+opends_setup_user:
+  rootUserDN: '"cn=Directory Manager"'
+  rootUserPassword: FRdemo123
+  hostname: "{{ opends_hostname }}"
+  ldapPort: 4389
+  ldapsPort: 4636
+  adminConnectorPort: 34444
+  baseDN: dc=example,dc=com 
+  acceptLicense: ""
+  
+  

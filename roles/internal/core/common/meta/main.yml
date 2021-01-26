@@ -1,6 +1,6 @@
 ---
 dependencies:
-  - {role: robertdebock.bootstrap,  tags: ansible }
+#  - {role: robertdebock.bootstrap,  tags: ansible }
   - {role: bootstrap,               tags: ansible }
   - {role: lcm,                     tags: ansible }
   - {role: lvm,                     tags: lvm }

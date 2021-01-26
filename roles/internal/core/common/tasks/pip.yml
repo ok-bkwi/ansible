@@ -21,13 +21,12 @@
 
 - name: Upgrade pip # noqa 301
   command:
-    cmd: "pip install --upgrade pip"
+    cmd: "pip install --upgrade \"pip < 21.0\""
 
 - name: Pip packages
   pip:
     name: '{{ common_pip_packages }}'
     state: present
-    extra_args: --upgrade pip
 
 - name: Pip packages extra
   pip:

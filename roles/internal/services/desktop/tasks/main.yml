@@ -16,7 +16,6 @@
     name: docker-compose
     version: 1.9.0
     state: present
-    extra_args: --upgrade pip
 
 - name: Pull image
   docker_image:

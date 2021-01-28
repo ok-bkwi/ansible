@@ -6,12 +6,12 @@ __metaclass__ = type
 from ansible.errors import AnsibleFilterError
 import json, os
 
-# Return folder name for JDK 
+# Return folder name for JDK
 # e.g. jdk8_222b10_oj9
 def java_folder(version):
     return version.lower()
 
-# Return Java home 
+# Return Java home
 # e.g. /usr/lib/jvm/jdk8_222b10_oj9
 def java_home(version):
     return os.path.join(os.path.sep,
@@ -19,12 +19,12 @@ def java_home(version):
         java_folder(version))
 
 def java_keystore(version):
-    return os.path.join(os.path.sep, 
+    return os.path.join(os.path.sep,
         java_home(version),
         'jre/lib/security/cacerts')
 
 def java_keytool(version):
-    return os.path.join(os.path.sep, 
+    return os.path.join(os.path.sep,
         java_home(version),
         'jre/bin/keytool')
 

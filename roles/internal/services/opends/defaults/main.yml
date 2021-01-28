@@ -43,7 +43,7 @@ opends_setup_user:
   hostname: "{{ opends_hostname }}"
   ldapPort: 4389
   ldapsPort: 4636
-  adminConnectorPort: 34444
+  adminConnectorPort: 44444
   baseDN: dc=example,dc=com 
   acceptLicense: ""
   

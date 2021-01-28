@@ -9,6 +9,10 @@ This Ansible role is used to install, upgrade and remove [ForgeRock Directory Se
 4. 
 
 
+# Links
+
+* [How do I configure DS/OpenDJ (All versions) to be stopped and started as a service using systemd and systemctl? - Knowledge - BackStage](https://backstage.forgerock.com/knowledge/kb/article/a56766667)
+
 
 # TODO
 

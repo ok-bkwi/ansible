@@ -4,8 +4,8 @@
   become: True
 
   roles:
-    - { role: common }
-    - { role: java }
+    - { role: c2.core.common }
+    - { role: c2.core.java }
     - { role: opendj }
     - { role: nfs }    
     - { role: postfix }

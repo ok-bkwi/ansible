@@ -1,3 +1,3 @@
 ---
 dependencies:
-  - lcm
+  - c2.core.lcm

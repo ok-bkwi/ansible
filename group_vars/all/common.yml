@@ -1,6 +1,6 @@
 ---
 common_packages_extra: 
-  RedHat 7: ['nfs-utils', 'nano', 'tree', 'python-devel','openldap-devel']
+  RedHat 7: ['nfs-utils', 'nano', 'tree', 'python-devel','openldap-devel','unzip']
 
 #'libffi-dev','libpq-dev'
 #'libffi-devel'

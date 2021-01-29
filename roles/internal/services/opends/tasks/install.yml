@@ -12,13 +12,12 @@
   stat:
     path: "{{ opends_home }}/{{ opends_version }}/config"
   register: config_dir
-  
-  
-- name: Stat opendj dir, to prevent installing twice. 
+
+- name: Stat opendj dir, to prevent installing twice.
 # Note: should be 100% certain check, as opendj dir  is created in the Unzip step but /bak in the setup directory-server step.
   stat:
     path: "{{ opends_home }}/{{ opends_version }}/config/opendj/bak"
-  register: configds_installed 
+  register: configds_installed
 
 - debug:
     msg: "Command: {{ opends_setup_config|opends_cmd }}"
@@ -26,21 +25,21 @@
 - name: Setup OpenDS config
   command: "./setup directory-server {{ opends_setup_config|opends_cmd }}"
   become: yes
-  become_user: forgerock 
+  become_user: forgerock
   args:
     chdir: "{{ opends_home }}/{{ opends_version }}/config/opendj"
   when: not configds_installed.stat.exists
   register: ds_setup_status
-  
-- name: Status
+
+- name: Status # noqa 301
   command: "{{ opends_home }}/{{ opends_version }}/config/opendj/bin/status --offline"
   become: yes
   become_user: forgerock
   register: ds_status
   ignore_errors: yes
-  
+
 # End of section for config DS instance
-  
+
 - name: Unzip User
   unarchive:
     dest: "{{ opends_home }}/{{ opends_version }}/user"
@@ -54,12 +53,12 @@
   stat:
     path: "{{ opends_home }}/{{ opends_version }}/user"
   register: config_dir
-  
-  
-- name: Stat opendj user dir, to prevent installing twice. 
+
+
+- name: Stat opendj user dir, to prevent installing twice.
   stat:
     path: "{{ opends_home }}/{{ opends_version }}/user/opendj/bak"
-  register: userds_installed 
+  register: userds_installed
 
 - debug:
     msg: "Command: {{ opends_setup_user|opends_cmd }}"
@@ -67,13 +66,13 @@
 - name: Setup OpenDS
   command: "./setup directory-server {{ opends_setup_user|opends_cmd }}"
   become: yes
-  become_user: forgerock 
+  become_user: forgerock
   args:
     chdir: "{{ opends_home }}/{{ opends_version }}/user/opendj"
   when: not userds_installed.stat.exists
   register: ds_setup_status
-  
-- name: Status
+
+- name: Status # noqa 301
   command: "{{ opends_home }}/{{ opends_version }}/user/opendj/bin/status --offline"
   become: yes
   become_user: forgerock

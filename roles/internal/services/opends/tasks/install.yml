@@ -12,34 +12,30 @@
   stat:
     path: "{{ opends_home }}/{{ opends_version }}/config"
   register: config_dir
-  
-  
-- name: Stat opendj dir, to prevent installing twice. 
+
+- name: Stat opendj dir, to prevent installing twice.
 # Note: should be 100% certain check, as opendj dir  is created in the Unzip step but /bak in the setup directory-server step.
   stat:
     path: "{{ opends_home }}/{{ opends_version }}/config/opendj/bak"
-  register: configds_installed 
-
-#- debug:
-#    msg: "Command: {{ opends_setup_config|opends_cmd }}"
+  register: configds_installed
 
 - name: Setup OpenDS config # noqa 301
   command: "./setup directory-server {{ opends_setup_config|opends_cmd }}"
   become: yes
-  become_user: forgerock 
+  become_user: forgerock
   args:
     chdir: "{{ opends_home }}/{{ opends_version }}/config/opendj"
   when: not configds_installed.stat.exists
   register: ds_setup_status
-  
-- name: Status
+
+- name: Status # noqa 301
   command: "{{ opends_home }}/{{ opends_version }}/config/opendj/bin/status --offline"
   become: yes
   become_user: forgerock
   register: ds_status
   ignore_errors: yes
-  
-- name: DS config service two-step vehicle
+
+- name: Systemd DS config 2-step level
   template:
     src: dsconfig-init.j2
     dest:  "{{ opends_home }}/{{ opends_version }}/config/opendj/bin/dsconfig-init.sh" 
@@ -65,12 +61,14 @@
     name: ds-config
     enabled: yes
 
+
 # As during install through the setup command the service gets started, we cannot require 'started' here. Error would be "unable to start service ds-config" :-( 
 # The whole two-step install
 # mainly accomplishes that start-ds shell script is run upon boot. The perils of running an init.d era startup script in the syemctl Unix era.
 
 
 # End of section for config DS instance
+
 
 
 - name: Unzip User
@@ -86,12 +84,12 @@
   stat:
     path: "{{ opends_home }}/{{ opends_version }}/user"
   register: config_dir
-  
-  
-- name: Stat opendj user dir, to prevent installing twice. 
+
+
+- name: Stat opendj user dir, to prevent installing twice.
   stat:
     path: "{{ opends_home }}/{{ opends_version }}/user/opendj/bak"
-  register: userds_installed 
+  register: userds_installed
 
 # - debug:
 #   msg: "Command: {{ opends_setup_user|opends_cmd }}"
@@ -99,18 +97,19 @@
 - name: Setup OpenDS
   command: "./setup directory-server {{ opends_setup_user|opends_cmd }}"
   become: yes
-  become_user: forgerock 
+  become_user: forgerock
   args:
     chdir: "{{ opends_home }}/{{ opends_version }}/user/opendj"
   when: not userds_installed.stat.exists
   register: ds_setup_status
-  
-- name: Status
+
+- name: Status # noqa 301
   command: "{{ opends_home }}/{{ opends_version }}/user/opendj/bin/status --offline"
   become: yes
   become_user: forgerock
   register: ds_status
   ignore_errors: yes
+
 
  
 
@@ -122,6 +121,7 @@
     group: root
     mode: 0755
     
+
 - name: Systemd DS user service
   template:
     src: dsuser.service.j2
@@ -132,12 +132,14 @@
   notify: systemctl-daemon-reload
 
 
+
 - name: ensure user service (running and) set to start on boot
   service:
     name: ds-user
     enabled: yes    
     
     
+
 
 
 

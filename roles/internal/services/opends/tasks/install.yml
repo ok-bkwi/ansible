@@ -50,7 +50,7 @@
 - name: DS config service two-step vehicle
   template:
     src: dsconfig-init.j2
-    dest:  "{{ opends_home }}/{{ opends_version }}/config/opendj/bin/dsconfig-init.sh" 
+    dest:  "{{ opends_home }}/{{ opends_version }}/config/opendj/bin/dsconfig-init.sh"
     owner: root
     group: root
     mode: 0755
@@ -94,7 +94,6 @@
   register: ds_status
   ignore_errors: yes
 
-  
 - name: Systemd DS user service
   template:
     src: dsuser.service.j2
@@ -108,7 +107,7 @@
 - name: DS user service two-step vehicle
   template:
     src: dsuser-init.j2
-    dest:  "{{ opends_home }}/{{ opends_version }}/user/opendj/bin/dsuser-init.sh" 
+    dest:  "{{ opends_home }}/{{ opends_version }}/user/opendj/bin/dsuser-init.sh"
     owner:
     group: root
     mode: 0755

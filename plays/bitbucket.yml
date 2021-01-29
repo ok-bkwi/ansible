@@ -4,13 +4,13 @@
   become: yes
 
   roles:
-    - { role: c2.core.common,               tags: ["common"] }
-    - { role: c2.core.postgresql_client,    tags: ["database"], when: bitbucket_database_type == 'postgresql' }
-    - { role: c2.core.oracle_client,        tags: ["database"], when: bitbucket_database_type == 'oracle' }
-    - { role: c2.forgerock.test,            tags: ["test"] }
-    - { role: geerlingguy.git,              tags: ["bitbucket"] }
-    - { role: bitbucket,                    tags: ["bitbucket"] }
-    - { role: backup,                       tags: ["backup"] }
+    - { role: c2platform.core.common,               tags: ["common"] }
+    - { role: c2platform.core.postgresql_client,    tags: ["database"], when: bitbucket_database_type == 'postgresql' }
+    - { role: c2platform.core.oracle_client,        tags: ["database"], when: bitbucket_database_type == 'oracle' }
+    - { role: c2platform.forgerock.test,            tags: ["test"] }
+    - { role: geerlingguy.git,                      tags: ["bitbucket"] }
+    - { role: c2platform.services.bitbucket,        tags: ["bitbucket"] }
+    - { role: c2platform.platform.backup,           tags: ["backup"] }
 
   vars:
     git_install_from_source: true

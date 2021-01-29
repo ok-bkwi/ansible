@@ -45,7 +45,7 @@ _Capability Levels_
 
 This repository includes a number of supporting products / components that are typically used in conjunction with the products above:
 
-| Component   |  Purpose | 
+| Component   |  Purpose |
 |----------|---|
 | [reverse_proxy](roles/internal/reverse_proxy)| Reverse proxy server |
 | [postgresql](roles/external/geerlingguy.postgresql)| Database for SonarQube, Jira, Bitbucket, Confluence |

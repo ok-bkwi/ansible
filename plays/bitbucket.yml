@@ -7,7 +7,7 @@
     - { role: c2.core.common,               tags: ["common"] }
     - { role: c2.core.postgresql_client,    tags: ["database"], when: bitbucket_database_type == 'postgresql' }
     - { role: c2.core.oracle_client,        tags: ["database"], when: bitbucket_database_type == 'oracle' }
-    - { role: c2.forgerock.test,            tags: ["test"] }
+    - { role: c2.forgerock222.test,            tags: ["test"] }
     - { role: geerlingguy.git,              tags: ["bitbucket"] }
     - { role: bitbucket,                    tags: ["bitbucket"] }
     - { role: backup,                       tags: ["backup"] }

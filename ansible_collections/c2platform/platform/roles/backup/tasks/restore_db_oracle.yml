@@ -2,12 +2,12 @@
 - name: Remove Oracle dump dir
   file:
     state: absent
-    path: "{{ item|role_dump_dir(vars) }}"
+    path: "{{ item|c2platform.platform.role_dump_dir(vars) }}"
 
 - name: Create Oracle dump dir
   file:
     state: directory
-    path: "{{ item|role_dump_dir(vars) }}"
+    path: "{{ item|c2platform.platform.role_dump_dir(vars) }}"
     mode: 0777
     recurse: yes
 
@@ -15,11 +15,11 @@
   unarchive:
     src: "{{ backup_restore[item]['db_tar'] }}"
     remote_src: yes
-    dest: "{{ item|role_dump_dir(vars) }}"
+    dest: "{{ item|c2platform.platform.role_dump_dir(vars) }}"
   when: backup_restore[item]['db_tar'] is defined
 
 - name: Drop existing schema ( if it exists )
-  command: "{{ item|role_script_path('drop_schema.sh') }}"
+  command: "{{ item|c2platform.platform.role_script_path('drop_schema.sh') }}"
   when:
     backup_restore[item]['db_tar'] is defined or
     backup_roles[item]['incremental']
@@ -27,7 +27,7 @@
     TPELCM_CONFIRM: 'Y'
 
 - name: Run database import
-  command: "{{ item|role_script_path('impdp.sh') }}"
+  command: "{{ item|c2platform.platform.role_script_path('impdp.sh') }}"
   when:
     backup_restore[item]['db_tar'] is defined or
     backup_roles[item]['incremental']

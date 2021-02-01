@@ -35,7 +35,7 @@ def impdp_options(role, vars):
         'logfile':  role_dump_log_file(role,vars),
         'remap_schema': '$dump_schema:' + role_schema_name(role,vars),
         'remap_tablespace': '$dump_schema:' + role_schema_name(role,vars),
-        'schemas': '$dump_schema'         
+        'schemas': '$dump_schema'
     }
     return pump_options(role,vars,opts, 'import')
 
@@ -118,7 +118,7 @@ def role_oracle_connect(role, vars):
     if 'backup_admin_user' in vars['backup_roles'][role]:
         u = vars['backup_roles'][role]['backup_admin_user']
     if 'backup_admin_user_password' in vars['backup_roles'][role]:
-        p = vars['backup_roles'][role]['backup_admin_user_password']    
+        p = vars['backup_roles'][role]['backup_admin_user_password']
     s = role_tns_name(role,vars)
     return '%s/%s@%s' % (u,p,s)
 

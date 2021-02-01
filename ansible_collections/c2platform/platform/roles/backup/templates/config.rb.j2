@@ -19,7 +19,7 @@ preconfigure 'GenericBackup' do
 
 {% if backup_notify_mail['enabled'] == true %}
   notify_by Mail do |mail|
-{% if backup_notify_mail['from'] is defined %}  
+{% if backup_notify_mail['from'] is defined %}
     mail.from    = '{{ backup_notify_mail['from'] }}'
 {% else %}
     mail.from    = '{{ inventory_hostname }}@{{ backup_notify_mail['domain'] }}'
@@ -46,9 +46,9 @@ preconfigure 'GenericBackup' do
     slack.on_failure = {{ backup_notify_slack['on_failure'] }}
     slack.message = lambda do |model, data|
        "[{{ inventory_hostname }}] #{data[:status][:message]} #{model.label} (#{model.trigger})"
-    end    
+    end
   end
-{% endif %}  
+{% endif %}
 end
 
 tmp_path  File.join('{{ backup_tmp }}', '{{ inventory_hostname }}')

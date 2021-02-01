@@ -20,12 +20,12 @@ def snapshot_id(ss, data):
   sid_file = snapshot_id_file(ss, data)
   return open(sid_file, 'r').read().rstrip()
 
-# Path of file with checksum for tar /backup/archives/myapp/myapp_daily_0_1_0/2020.07.15.10.54.02/ 
+# Path of file with checksum for tar /backup/archives/myapp/myapp_daily_0_1_0/2020.07.15.10.54.02/
 def tar_sha256sum_file(tar):
   return tar + '.sha256sum'
 
 # e.g. /backup/snapshots/myapp/myapp-0.1.0/alpha.0/.backup-id
-# this file is created by the hooks file e.g. /etc/backup/hooks/myapp.sh 
+# this file is created by the hooks file e.g. /etc/backup/hooks/myapp.sh
 def snapshot_id_file(ss, data):
   return os.path.join(os.path.sep,ss,'home',data['backup_rsnapshot_id_file'])
 
@@ -56,9 +56,9 @@ def db_tar(tmp,tar,db_type,snapshot=False):
 
 # e.g. /backup/tmp/myapp-myapp/myapp_daily
 def tar_extracted(tmp, tar):
-  bn = os.path.basename(tar) 
+  bn = os.path.basename(tar)
   fldr = os.path.splitext(bn)[0]
-  return os.path.join(os.path.sep,tmp,fldr) 
+  return os.path.join(os.path.sep,tmp,fldr)
 
 # e.g /opt/myapp/RESTORED
 def restored_file(data):
@@ -75,7 +75,7 @@ def not_restored(s256,data):
       return True
   else: # create restore file
     if os.path.isdir(data['home']):
-      open(f,'w').write('Restored tar sha256sums / snapshot ids: ') 
+      open(f,'w').write('Restored tar sha256sums / snapshot ids: ')
     return True
 
 def get_remove_folder(data):
@@ -86,7 +86,7 @@ def get_remove_folder(data):
 #  or plain myapp
 def backup_name_underscored_pattern(data):
   if data['incremental']:
-    return data['backup_name_underscored'] 
+    return data['backup_name_underscored']
   else:
     return data['backup_name_underscored'] + '*'
 
@@ -115,16 +115,16 @@ def get_restore_info_snapshot(data):
     snapshots.append(ss)
   for ss in sorted_snapshots(snapshots):
     ssid = snapshot_id(ss, data)
-    restore_info.append({"path":ss, "backup-id": ssid, "restored": not not_restored(ssid,data) }) 
+    restore_info.append({"path":ss, "backup-id": ssid, "restored": not not_restored(ssid,data) })
   if len(restore_info) > 0 and (restore_info[0]["restored"] == False or data['force'] == True):
     has_changed = True
   if has_changed:
     fcts = restore_facts_snapshots(data, restore_info, ptrn)
     tr = restore_info[0]['path']
   else:
-    fcts = { 'backup_restore': 
+    fcts = { 'backup_restore':
             {data['role']: {
-              "path_pattern_expanded": ptrn,              
+              "path_pattern_expanded": ptrn,
               "snapshots": restore_info
             }}}
   return (has_changed, fcts, tr)
@@ -146,9 +146,9 @@ def get_restore_info_tar(data):
     fcts = restore_facts(data, restore_info, ptrn)
     tr = restore_info[0]['path']
   else:
-    fcts = { 'backup_restore': 
+    fcts = { 'backup_restore':
             {data['role']: {
-              "path_pattern_expanded": ptrn,              
+              "path_pattern_expanded": ptrn,
               "tars": restore_info
             }}}
   return (has_changed, fcts, tr)
@@ -161,7 +161,7 @@ def get_restore_info(data):
 
 # Restore facts for snapshots
 def restore_facts_snapshots(data, restore_info, ptrn):
-  fcts = { 'backup_restore': 
+  fcts = { 'backup_restore':
           {data['role']: {
             "path": restore_info[0]['path'],
             "backup-id":restore_info[0]['backup-id'],
@@ -180,7 +180,7 @@ def restore_facts_snapshots(data, restore_info, ptrn):
   if data['database']:
       if data['database_type'] == 'postgresql':
           ptrn = os.path.join(restore_info[0]['path'],data['backup_rsnapshot_backup_db_folder'],'*.tar')
-          # e.g. ptrn is /backup/snapshots/myapp/myapp-0.1.0/alpha.0/database/*.tar 
+          # e.g. ptrn is /backup/snapshots/myapp/myapp-0.1.0/alpha.0/database/*.tar
           # tar is for example confluence_6_14_3_daily.tar
       else:
           ptrn = os.path.join(restore_info[0]['path'],data['backup_rsnapshot_backup_db_folder'],'*.tar.gz')
@@ -203,7 +203,7 @@ def restore_facts_snapshots(data, restore_info, ptrn):
 def restore_facts(data, restore_info, ptrn):
   hm_extracted = os.path.join(os.path.sep, data['tmp'], 'home')
   tr_extracted = tar_extracted(data['tmp'], restore_info[0]['path'])
-  fcts = { 'backup_restore': 
+  fcts = { 'backup_restore':
           {data['role']: {
             "tar_extracted": tr_extracted,
             "tar":restore_info[0]['path'],
@@ -246,8 +246,8 @@ def main():
     "database": { "required": True, "type": "bool"},
     "database_type": { "required": True, "type": "str"},
     "home_version": { "required": True, "type": "str"},
-    "home_backup_version": { "required": True, "type": "str"},   
-    "incremental": { "required": False, "type": "bool"},   
+    "home_backup_version": { "required": True, "type": "str"},
+    "incremental": { "required": False, "type": "bool"},
     "home": { "required": True, "type": "str"},
     "tmp": {"required": True, "type": "str"}}
 

@@ -1,4 +1,4 @@
-# Log file: {{ item|role_log_file_path(vars) }}
+# Log file: {{ item|c2platform.platform.role_log_file_path(vars) }}
 #
 {% if backup_roles[item]['snapshot']|default(None) == True %}
 # Filesystem snapshot - LVM:
@@ -10,16 +10,16 @@
 # Mount: {{ vars[item+'_home'] }}
 #
 {% endif %}
-{% if vars[item + '_home'] is defined and 
+{% if vars[item + '_home'] is defined and
       backup_roles[item]['incremental']|default(False) == False %}
 # Archive:
-# Root: {{ item|role_archive_root(vars) }}
+# Root: {{ item|c2platform.platform.role_archive_root(vars) }}
 {% endif %}
 
 {% if backup_roles[item]['incremental']|default(None) == True %}
 # Rsnapshot:
-# Config: {{ item|role_rsnapshot_config_path(vars) }}
-# Root: {{ item|role_rsnapshot_root(vars) }}
+# Config: {{ item|c2platform.platform.role_rsnapshot_config_path(vars) }}
+# Root: {{ item|c2platform.platform.role_rsnapshot_root(vars) }}
 {% endif %}
 #
 # Backup home: {{ vars[item+'_home_backup'] }}
@@ -27,10 +27,10 @@
 {% if vars[item + '_database_type']|default(None) == 'oracle'  %}
 #
 # Oracle:
-# SCN file: {{ item|role_scn_file(vars) }}
-# Admin connect: {{ item|role_oracle_connect(vars) }}
-# TNS_ADMIN: {{ item|role_script_path }}
+# SCN file: {{ item|c2platform.platform.role_scn_file(vars) }}
+# Admin connect: {{ item|c2platform.platform.role_oracle_connect(vars) }}
+# TNS_ADMIN: {{ item|c2platform.platform.role_script_path }}
 # Client bin: {{ oracle_client_bin_path }}
-# Dump dir: {{ item|role_dump_dir(vars) }}
-# Home dump folder: {{ item|role_home_db_folder(vars) }}
+# Dump dir: {{ item|c2platform.platform.role_dump_dir(vars) }}
+# Home dump folder: {{ item|c2platform.platform.role_home_db_folder(vars) }}
 {% endif %}

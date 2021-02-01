@@ -15,7 +15,7 @@
 
 - name: Config folder
   file:
-    path: "{{ item|role_script_path }}"
+    path: "{{ item|c2platform.platform.role_script_path }}"
     state: directory
     mode: 0700
     recurse: yes
@@ -23,7 +23,7 @@
 
 - name: Scripts folder
   file:
-    path: "{{ item|role_script_path }}"
+    path: "{{ item|c2platform.platform.role_script_path }}"
     state: directory
     mode: 0700
   with_items: '{{ backup_roles_node }}'

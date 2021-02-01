@@ -4,5 +4,5 @@
   become: True
 
   roles:
-    - { role: common,                       tags: ["common"] }
-    - { role: haproxy,                      tags: ["haproxy"] }
+    - { role: c2platform.core.common,       tags: ["common"] }
+    - { role: c2platform.platform.haproxy,  tags: ["haproxy"] }

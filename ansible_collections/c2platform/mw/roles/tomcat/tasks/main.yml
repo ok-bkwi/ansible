@@ -3,7 +3,7 @@
   include: apps.yml
   loop: "{{ tomcat_apps }}"
   loop_control:
-    label: "{{ app.name }}"
+    label: "{{ app['name'] }}"
     loop_var: app
   when:
     - tomcat_apps is defined

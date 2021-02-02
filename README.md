@@ -104,7 +104,12 @@ Git clone this repository for example to `~/ansible`.
     git clone https://github.com/c2platform/ansible.git
     cd ~/ansible
 
-Note: if you run a vagrant command for example `vagrant status` a [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) password stored in the file `~/ansible/vpass` with content `secret` in root of the repository directory. This is used by Ansible vault for encrypting and decrypting [secrets](SECRETS.md). 
+Note: if you run a vagrant command for example `vagrant status` a [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) password stored in the file `~/ansible/vpass` with content `secret` in root of the repository directory. This is used by Ansible vault for encrypting and decrypting [secrets](SECRETS.md).
+
+The project uses Ansible collections. One collection, the ForgeRock collection, is used via a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules). If you want to use that collection you should also run
+
+    git submodule init
+    git submodule update
 
 ### Provision a first service
 

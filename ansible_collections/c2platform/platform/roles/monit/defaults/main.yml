@@ -1,4 +1,5 @@
 ---
+monit_enabled: no
 monit_enable_web_interface: yes
 monit_enable_web_interface_anywhere: no
 monit_check_interval_seconds: 30

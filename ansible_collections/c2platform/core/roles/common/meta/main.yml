@@ -8,7 +8,6 @@ dependencies:
   - {role: ajsalminen.hosts,        tags: network }
 #  - {role: ansible-hostname,        tags: hostname }
   - {role: Stouts.sudo,             tags: sudo }
-  - {role: ANXS.openssh,            tags: openssh, when: ansible_os_family == 'Debian' }
   - {role: knopki.locale,           tags: locale }
 #  - {role: manala.motd,             tags: motd }
   - {role: alias,                   tags: alias }

@@ -65,6 +65,9 @@
 # As during install through the setup command the service gets started, we cannot require 'started' here. Error would be "unable to start service ds-config" :-( 
 # The whole two-step install
 # mainly accomplishes that start-ds shell script is run upon boot. The perils of running an init.d era startup script in the syemctl Unix era.
+# What apparently happens when you also configure 'started' above is that Ansible tries a systemctl status ds-config. Which will fail directly after
+# initial install but STILL due to the setup directory-server command just executed the technical start-ds process runs.
+# Only upon next boot it will be running as a systemctl service properly.
 
 
 # End of section for config DS instance

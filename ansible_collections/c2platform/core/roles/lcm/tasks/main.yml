@@ -12,7 +12,7 @@
   set_fact: lcm_roles_node="{{ lcm_roles | intersect(ansible_role_names_cleaned) }}"
 
 - name: Determine LCM info facts
-  lcm_info:
+  c2platform.core.lcm_info:
     role: '{{ item }}'
     version: "{{ vars[item + '_version'] }}"
     version_prepare: "{{ vars[item + '_version_prepare']|default(omit) }}"

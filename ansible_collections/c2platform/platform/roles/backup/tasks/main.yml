@@ -76,7 +76,7 @@
     - rsnapshot
 
 - name: Restore facts
-  restore_info:
+  c2platform.platform.restore_info:
     backup_archives: '{{ backup_archives }}'
     backup_snapshots: '{{ backup_snapshots }}'
     role: '{{ item }}'

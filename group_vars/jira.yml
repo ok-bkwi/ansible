@@ -14,7 +14,7 @@ backup_roles:
     # backup_admin_user: custom_role_admin_user
     # backup_admin_user_password: custom_role_admin_password
 
-# backup_restore: 
+# backup_restore:
 #   jira:
 #     path_pattern: '*'
 #     folder: home
@@ -23,7 +23,7 @@ backup_roles:
 #     stop_start_service: jira
 
 # PostgreSQL settings
-# jira_database_host: 1.1.1.2
+jira_database_host: 1.1.1.2
 
 ## Example Oracle settings
 #jira_database_url: jdbc:oracle:thin:@//oracle:1521/JIRA.localdomain

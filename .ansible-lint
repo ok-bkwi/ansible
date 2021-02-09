@@ -1,8 +1,10 @@
 exclude_paths:
   - ./roles/external/
-  - ./roles/internal/test/
-  - ./roles/internal/services/awx/
+  - ./ansible_collections/c2platform/test/
+  - ./ansible_collections/c2platform/services/roles/awx/
 skip_list:
   - '701'
   - '303'
 warn_list: []
+
+

@@ -1,7 +1,9 @@
 ---
-# Terminate and block sessions to the database on restore
-# A database cannot be dropped with active sessions
-- include: ../../mw/postgresql/tasks/terminate-block-sessions.yml
+- name: Terminate and block sessions on upgrade
+  # a database cannot be dropped with active sessions
+  include_role:
+    name: c2platform.tasks
+    tasks_from: psql-terminate-block-sessions
   vars:
     terminate_database: "{{ vars[item + '_database_name_version']  }}"
     lcm_role_upgrade: "{{ item }}"
@@ -33,7 +35,10 @@
     state: present
   when: backup_restore[item]['db_tar'] is defined
 
-- include: ../../mw/postgresql/tasks/allow-sessions.yml
+- name: Allow sessions after database copy
+  include_role:
+    name: c2platform.tasks
+    tasks_from: psql-allow-sessions
   vars:
     allow_database: "{{ vars[item + '_database_name_version']  }}"
     lcm_role_upgrade: "{{ item }}"

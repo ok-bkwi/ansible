@@ -2,13 +2,15 @@
 - name: stop for upgrade, rollback or rollfoward
   #service: name=myapp state=stopped
   debug:
-    msg: "TODO stop service" 
-  when: myapp_lcm['operation'] in ['upgrade','rollback','rollforward'] 
+    msg: "TODO stop service"
+  when: myapp_lcm['operation'] in ['upgrade','rollback','rollforward']
   notify:
     - myapp-systemctl-daemon-reload
     - myapp-systemctl-restart
 
-- include: ../../postgresql/tasks/database.yml 
+- include_role:
+    name: c2platform.tasks
+    tasks_from: psql-database
 
 - name: Table
   postgresql_table:
@@ -32,7 +34,7 @@
     path: "{{ myapp_home }}"
     state: directory
     group: '{{ myapp_owner }}'
-    owner: '{{ myapp_owner }}' 
+    owner: '{{ myapp_owner }}'
 
 - name: Create log directory
   file:
@@ -46,7 +48,7 @@
     path: "{{ myapp_home_version }}"
     state: directory
     group: '{{ myapp_owner }}'
-    owner: '{{ myapp_owner }}'    
+    owner: '{{ myapp_owner }}'
 
 - name: Install
   copy:
@@ -60,11 +62,11 @@
     path: "{{ myapp_home_version }}/data"
     state: directory
     group: '{{ myapp_owner }}'
-    owner: '{{ myapp_owner }}'    
+    owner: '{{ myapp_owner }}'
 
 - name: Copy data dir ( part of upgrade )
   command: "rsync -az --delete --recursive --exclude='VERSION' {{ myapp_home_version_current }}/data/ {{ myapp_home_version }}/data/"
-  when: myapp_lcm['operation'] == 'upgrade' 
+  when: myapp_lcm['operation'] == 'upgrade'
   notify:
     - lcm-version-file
 
@@ -81,7 +83,7 @@
     group: "myapp"
     mode: "755"
     owner: "myapp"
-  with_items: 
+  with_items:
     - insert
     - select
     - delete
@@ -100,7 +102,7 @@
 - package:
     name: "{{ item }}"
     state: "present"
-  with_items: 
+  with_items:
     - tree
     - words
 

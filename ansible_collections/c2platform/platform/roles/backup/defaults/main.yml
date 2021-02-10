@@ -5,7 +5,7 @@ backup_tmp: /backup/tmp
 backup_archives: /backup/archives
 backup_snapshots: /backup/snapshots
 backup_split_into_chunks_of: 1000000
-backup_alias_prefix: tpelcm
+backup_alias_prefix: c2
 backup_cron_jobs: true
 backup_restore_db: false
 backup_restore_home: false
@@ -16,7 +16,7 @@ backup_rsnapshot_backup_db_folder: database
 backup_mount_options: ''
 #backup_script_before: ''
 
-backup_roles_supported: 
+backup_roles_supported:
   - jira
   - confluence
   - sonarqube
@@ -66,7 +66,7 @@ backup_roles:
 backup:
   schedules_default: ['daily', 'weekly', 'monthly', 'manual']
   rsnapshot_levels: ['alpha','beta','gamma']
-  rsnapshot_level_runs: 
+  rsnapshot_level_runs:
     alpha: ['alpha']
     beta: ['beta','alpha']
     gamma: ['gamma','beta','alpha']
@@ -95,7 +95,7 @@ backup_notify_mail:
   #encryption: ':none'
 
 backup_notify_slack:
-  enabled: false 
+  enabled: false
   webhook: https://hooks.slack.com/services/...
   channel: infra
   on_success: 'true'
@@ -116,7 +116,7 @@ backup_utility:
       url: https://github.com/tpelcm/omnibus-backup/releases/download/v5.0.0.beta2-1-el7/backup-5.0.0.beta.2-1.el7.x86_64.rpm
       checksum: ce4170985fbce068a9b16d08e916ac570af0a82dcdb9c2286753f800bbb90d77
 
-#backup_restore: 
+#backup_restore:
 #  sonarqube:
 #    path_pattern: '*'
 #    folder: extensions/plugins
@@ -134,7 +134,7 @@ backup_oracle:
   backup_admin_user: tpe_dba
   backup_admin_user_password: mysecretpassword
 
-# Oracle Data Pump ( expdp / impdp ) options 
+# Oracle Data Pump ( expdp / impdp ) options
 # To remove options use no, otherwise use strings
 # for more options see expdp help=y
 backup_oracle_pump_options_import:

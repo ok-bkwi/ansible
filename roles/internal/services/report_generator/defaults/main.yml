@@ -1,0 +1,35 @@
+---
+#
+# Hieronder staan de attributen die noodzakelijk zijn voor de report generator.
+#
+
+# Algemene configuratie parameters (general)
+# Op welke host draait (host)
+# User / group (user)
+
+repogen_general:
+  repogen_dir: '/opt/repo/rep_gen'
+  repogen_log_dir: '/opt/repo/rep_gen/logs'
+  jmeter_cmd: '/opt/repo/testers/apache-jmeter-3.3/bin/jmeter'
+  jmeter_req_delay: '10000'
+
+repogen_host:
+  run_on: 'repo01.repo.local'
+
+repogen_user:
+  user: 'repouser'
+  group: 'repogroup'
+
+#
+# Deze attributes bevatten alle LDAP users
+#
+repogen_ldap_data:
+  - "gemeente01;0001;ou=gemeente01,ou=prv,o=suwi,c=nl;01;0;"
+  - "gemeente02;0002;ou=gemeente02,ou=prv,o=suwi,c=nl;02;0;"
+
+#
+# Deze attributes bevatten alle test data, ofwel pagina's
+#
+repogen_pagina_data:
+  - "prv;repotoets;main;"
+  - "prv;repoplus;main;"

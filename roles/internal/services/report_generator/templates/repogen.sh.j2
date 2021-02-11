@@ -1,0 +1,44 @@
+#!/bin/bash
+
+#
+# THIS FILE IS ANSIBLE MANAGED
+#
+
+#
+# Acties sctipt:
+# 1. cd naar de repo gen directory
+# 2. script starten voor BTO of KIT
+# 3. de logs zippen wanneer het script klaar is
+# 4. logbestanden ouder dan X dagen opruimen
+#
+# Toelichting jmeter vlaggen:
+#	  * -n              : Geeft aan dat er geen Gebruikers interface gestart moet worden
+#	  * -Jenvironment=  : De omgeving waartegen het script moet draaien BTO of KIT
+#	  * -JrequestDelay= : Om de hoeveel ms er een request moet worden gedaan, default is 10000
+#	  * -JlogFilePath=  : De directory waar de log weggeschreven moet worden
+#	  * -t              : JMeter parameter, hierachter geef je aan welke JMeter script er gestart moet worden
+#
+
+
+#
+# Op basis van BTO/KIT input het script starten richting de juiste omgeving.
+#
+
+case $1 in
+  'BTO'|'KIT' )
+    # Naar de juiste dir gaan
+    cd {{ repogen_general['repogen_dir'] }}
+
+    # Het script starten
+    {{ repogen_general['jmeter_cmd'] }} -n -Jenvironment=$1 -JrequestDelay={{ repogen_general['jmeter_req_delay'] }} -JlogFilePath={{ repogen_general['repogen_log_dir'] }}  -t {{ repogen_general['repogen_dir'] }}/rapportage_generator.jmx
+
+    # De logs zippen
+    find {{ repogen_general['repogen_log_dir'] }} -name '*.csv' -exec gzip {} \;
+
+    # Log bestanden ouder dan 14 dagen verwijderen
+    find {{ repogen_general['repogen_log_dir'] }} -type f -mtime +13 -delete
+    ;;
+  * )
+    echo "Verkeerde input, je moet BTO of KIT doorgeven als variabel (b.v. $ ./repo_gen.sh BTO)"
+    ;;
+esac

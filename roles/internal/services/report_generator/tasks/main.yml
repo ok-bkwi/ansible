@@ -1,0 +1,87 @@
+---
+
+- name: Create group {{ repogen_user['group'] }}
+  ansible.builtin.group:
+    name: "{{ repogen_user['group'] }}"
+
+- name: Create user {{ repogen_user['user'] }}
+  ansible.builtin.user:
+    name: "{{ repogen_user['user'] }}"
+    group: "{{ repogen_user['group'] }}"
+
+- name: Create report directory {{ repogen_general['repogen_dir'] }}
+  ansible.builtin.file:
+    path: "{{ repogen_general['repogen_dir'] }}"
+    state: directory
+    owner: "{{ repogen_user['user'] }}"
+    group: "{{ repogen_user['group'] }}"
+    mode: 00775
+
+- name: Create report log directory {{ repogen_general['repogen_log_dir'] }}
+  ansible.builtin.file:
+    path: "{{ repogen_general['repogen_log_dir'] }}"
+    state: directory
+    owner: "{{ repogen_user['user'] }}"
+    group: "{{ repogen_user['group'] }}"
+    mode: 00775
+
+# MLi: Deze taak faalt wanneer er geen data is --> nog te fixen
+- name: Create CSV with LDAP / gemeente data
+  ansible.builtin.template:
+    src: ldap_data.csv.j2
+    dest: "{{ repogen_general['repogen_dir'] }}/ldap_data.csv"
+    owner: "{{ repogen_user['user'] }}"
+    group: "{{ repogen_user['group'] }}"
+    mode: 0644
+
+# MLi: Deze taak faalt wanneer er geen data is --> nog te fixen
+- name: Create CSV with pages to be queried
+  ansible.builtin.template:
+    src: pagina_data.csv.j2
+    dest: "{{ repogen_general['repogen_dir'] }}/pagina_data.csv"
+    owner: "{{ repogen_user['user'] }}"
+    group: "{{ repogen_user['group'] }}"
+    mode: 0644
+
+- name: Copy JMeter config file
+  ansible.builtin.copy:
+    src: rapportage_generator.jmx
+    dest: "{{ repogen_general['repogen_dir'] }}/rapportage_generator.jmx"
+    owner: "{{ repogen_user['user'] }}"
+    group: "{{ repogen_user['group'] }}"
+    mode: 0644
+
+# Script voor het starten van de report generator
+# Dit script verwacht de waarden BTO of KIT als input!
+- name: Create start script for report generator
+  ansible.builtin.template:
+    src: repogen.sh.j2
+    dest: "{{ repogen_general['repogen_dir'] }}/repogen.sh"
+    owner: "{{ repogen_user['user'] }}"
+    group: "{{ repogen_user['group'] }}"
+    mode: 0775
+
+#
+# Ook al zal maar 1 bastion de cron bevatten, dit biedt wel de mogelijkeid om evt. te switchen naar de andere bastion.
+# De cronjobs alleen inrichten op de gekozen host (zie default attributes)
+#
+
+# BTO: start elke werkdag om 01:00
+- name: Create cron job for BTO
+  ansible.builtin.cron:
+    name: repo_gen_bto
+    minute: "0"
+    hour: "1"
+    weekday: "1-5"
+    user: "{{ repogen_user['user'] }}"
+    job: "{{ repogen_general['repogen_dir'] }}/repogen.sh BTO"
+
+# KIT: start elke werkdag om 01:15
+- name: Create cron job for KIT
+  ansible.builtin.cron:
+    name: repo_gen_kit
+    minute: "15"
+    hour: "1"
+    weekday: "1-5"
+    user: "{{ repogen_user['user'] }}"
+    job: "{{ repogen_general['repogen_dir'] }}/repogen.sh KIT"
